@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@android:id/background">
+    <shape>
+      <corners android:radius="@dimen/theq_sdk_game_button_radius" />
+      <solid android:color="@color/theq_sdk_transparent" />
+    </shape>
+  </item>
+
+  <item android:id="@android:id/progress">
+    <scale android:scaleWidth="100%">
+      <shape>
+        <corners android:radius="@dimen/theq_sdk_game_button_radius" />
+        <solid android:color="@color/theq_sdk_black_15p_transparent" />
+
+      </shape>
+    </scale>
+  </item>
+
+</layer-list>

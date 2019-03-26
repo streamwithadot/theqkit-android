@@ -1,0 +1,49 @@
+<resources>
+  <string name="theq_sdk_cash_out_title">Cash Out</string>
+  <string name="theq_sdk_cashout_message">You currently have %1$s. Enter your PayPal email to request to cash out.</string>
+  <string name="theq_sdk_dismiss">Dismiss</string>
+  <string name="theq_sdk_request">Request</string>
+  <string name="theq_sdk_paypal_email">PayPal Email</string>
+  <string name="theq_sdk_video_error_message">Video Error. Don\'t stop playing!</string>
+  <string name="theq_sdk_use_extra_life_title">Use an extra life?</string>
+  <string name="theq_sdk_use_extra_life_description">You have an available extra life! Use it to stay in the game!</string>
+  <string name="theq_sdk_use_it">Use It!</string>
+  <string name="theq_sdk_dont_use_it">Don\'t Use It!</string>
+  <string name="theq_sdk_question_number">Question %d</string>
+  <string name="theq_sdk_your_answer">Your Answer</string>
+
+  <string name="theq_sdk_cashout_minimum_message">You have not hit the minimum cash out requirement of $25. You currently have %1$s.</string>
+  <string name="theq_sdk_cashout_user_load_failure">Unable to load user balance.</string>
+  <string name="theq_sdk_cashout_not_logged_in">You must be logged in to request a cash out.</string>
+  <string name="theq_sdk_cashout_email_update_failure">"Make sure the email address is valid and not already in use."</string>
+  <string name="theq_sdk_cashout_unknown_error">An unknown error has occurred attempting to cash out. Please try again.</string>
+  <string name="theq_sdk_cashout_success_message">Thank\'s for playing! We will be sending money your way!</string>
+  
+  <string name="theq_sdk_username_alert_title">Choose a Username</string>
+  <string name="theq_sdk_username_alert_description">In order to receive your winnings, you\'ll need to create a username on The Q.</string>
+  <string name="theq_sdk_submit">Submit</string>
+  <string name="theq_sdk_username">Username</string>
+  <string name="theq_sdk_logging_in">Logging In...</string>
+  <string name="theq_sdk_creating_account">Creating Account...</string>
+  <string name="theq_sdk_cancel">Cancel</string>
+  <string name="theq_sdk_username_not_available">*Username Not Available</string>
+
+  <string name="theq_sdk_leave">Leave</string>
+  <string name="theq_sdk_submission_timed_out">Submission Timed Out</string>
+  <string name="theq_sdk_submission_timed_out_description">We did not receive your answer in time due to a network issue. Please use wifi if it is available! You may keep playing to increase your score on the Leaderboard!</string>
+  <string name="theq_sdk_leave_game_title">Leave Game</string>
+  <string name="theq_sdk_leave_game_message">Are you sure you want to leave the game? You will be eliminated if the game is still in progress.</string>
+  <string name="theq_sdk_continue_playing">Continue Playing</string>
+  <string name="theq_sdk_eliminated">Eliminated</string>
+  <string name="theq_sdk_earn_points">EARN POINTS</string>
+  <string name="theq_sdk_late_join_description">You\'re no longer eligible to win today\'s game, but you can still answer questions to earn points on the leaderboard!</string>
+  <string name="theq_sdk_late_join_title">You\'ve joined the game late.</string>
+
+  <plurals name="theq_sdk_n_winners">
+    <item quantity="one">%1$d Winner!</item>
+    <item quantity="other">%1$d Winners!</item>
+  </plurals>
+
+  <string name="theq_sdk_full_currency_format">$###,###,##0.00</string>
+  <string name="theq_sdk_rounded_currency_format">$###,###,##0</string>
+</resources>

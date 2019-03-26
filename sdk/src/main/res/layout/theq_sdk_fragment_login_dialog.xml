@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="84dp"
+    >
+
+  <ImageView
+      android:id="@+id/logo"
+      android:layout_width="72dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:adjustViewBounds="true"
+      android:tint="@color/theq_sdk_pink_no_override"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/theq_sdk_network_logo"
+      />
+
+  <TextView
+      android:id="@+id/title"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="24dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="16dp"
+      android:text="@string/theq_sdk_username_alert_title"
+      android:textColor="@color/theq_sdk_black"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/logo"
+      />
+
+  <TextView
+      android:id="@+id/description"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="24dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/theq_sdk_username_alert_description"
+      android:textColor="@color/theq_sdk_black"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/title"
+      />
+
+
+  <EditText
+      android:id="@+id/usernameEditText"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="18dp"
+      android:layout_marginStart="18dp"
+      android:layout_marginTop="8dp"
+      android:hint="@string/theq_sdk_username"
+      android:inputType="textNoSuggestions"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/description"
+      />
+
+  <ProgressBar
+      android:id="@+id/notifierProgress"
+      android:layout_width="18dp"
+      android:layout_height="20dp"
+      android:layout_marginStart="22dp"
+      android:visibility="gone"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/usernameEditText"
+      android:progressTint="@color/theq_sdk_blue"
+      />
+
+  <TextView
+      android:id="@+id/inputNotifier"
+      android:layout_width="wrap_content"
+      android:layout_height="20dp"
+      android:layout_marginStart="22dp"
+      android:gravity="center_vertical"
+      android:text="@string/theq_sdk_username_not_available"
+      android:textColor="@color/theq_sdk_color_accent"
+      android:textSize="14dp"
+      android:visibility="gone"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/usernameEditText"
+      />
+
+  <Button
+      android:id="@+id/cancel"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="@string/theq_sdk_cancel"
+      android:textColor="@color/theq_sdk_black_50p_transparent"
+      app:layout_constraintEnd_toStartOf="@id/submit"
+      app:layout_constraintTop_toBottomOf="@id/inputNotifier"
+      style="@style/TransparentButton"
+      />
+
+  <Button
+      android:id="@+id/submit"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/theq_sdk_submit"
+      android:textColor="@color/theq_sdk_black_50p_transparent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/inputNotifier"
+      style="@style/TransparentButton"
+      />
+
+  <ProgressBar
+      android:id="@+id/loadingSpinner"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_marginStart="24dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias=".5"
+      />
+
+  <TextView
+      android:id="@+id/loadingMessage"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:textColor="@color/theq_sdk_black"
+      android:textSize="18sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toRightOf="@id/loadingSpinner"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias=".5"
+      tools:text="Logging in..."
+      />
+
+  <androidx.constraintlayout.widget.Group
+      android:id="@+id/entryGroup"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:visibility="gone"
+      app:constraint_referenced_ids="logo,title,description,usernameEditText,cancel,submit"
+      tools:visibility="visible"
+      />
+
+  <androidx.constraintlayout.widget.Group
+      android:id="@+id/loadingGroup"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:visibility="gone"
+      app:constraint_referenced_ids="loadingSpinner,loadingMessage"
+      tools:visibility="gone"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

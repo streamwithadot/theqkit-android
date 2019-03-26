@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="60dp"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/winnerText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@color/theq_sdk_color_accent"
+      android:paddingEnd="4dp"
+      android:paddingStart="4dp"
+      android:textColor="@color/theq_sdk_white"
+      android:textSize="32sp"
+      android:textStyle="bold"
+      tools:text=" 7 Winners! "
+      />
+
+  <TextView
+      android:id="@+id/prizeText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/theq_sdk_white"
+      android:textSize="32sp"
+      android:textStyle="bold"
+      tools:text="$250 Prize"
+      />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/winnerRecyler"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      />
+
+</LinearLayout>

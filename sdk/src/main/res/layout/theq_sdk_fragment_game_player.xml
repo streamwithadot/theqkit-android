@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/playerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:use_artwork="false"
+      app:use_controller="false"
+      app:auto_show="false"
+      app:resize_mode="zoom"
+      android:keepScreenOn="true"
+      app:shutter_background_color="@color/theq_sdk_color_primary_dark" />
+
+  <ProgressBar
+      android:id="@+id/loading"
+      android:layout_gravity="center"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:visibility="gone"
+      tools:visibility="visible" />
+
+  <TextView
+      android:id="@+id/videoErrorMessage"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="8dp"
+      android:text="@string/theq_sdk_video_error_message"
+      android:textColor="@color/theq_sdk_white"
+      android:visibility="gone"
+      tools:visibility="visible"
+      tools:textColor="@color/theq_sdk_color_accent"
+      />
+
+</FrameLayout>

@@ -1,0 +1,112 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
+
+androidExtensions {
+  experimental = true
+}
+
+android {
+  compileSdkVersion 28
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 28
+    versionCode 1
+    versionName POM_VERSION
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  compileOptions {
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  buildTypes {
+    debug {
+      minifyEnabled false
+      signingConfig signingConfigs.debug
+    }
+    release {
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  implementation 'com.android.support:appcompat-v7:28.0.0'
+  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  testImplementation 'junit:junit:4.12'
+  androidTestImplementation 'com.android.support.test:runner:1.0.2'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
+
+  implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+  implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+  implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+  implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+  implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+  implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+  implementation 'com.google.code.gson:gson:2.8.2'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+  implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+  kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
+  implementation 'com.google.android.exoplayer:exoplayer-core:2.9.6'
+  implementation 'com.google.android.exoplayer:exoplayer-ui:2.9.6'
+  implementation 'com.google.android.exoplayer:extension-rtmp:2.9.6'
+  implementation 'com.tylerjroach:eventsource:1.2.11'
+  implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+  implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+  implementation 'com.airbnb.android:lottie:2.8.0'
+  // Koin for Android
+  implementation 'org.koin:koin-android:1.0.2'
+  // Koin for Android Architecture ViewModel
+  implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+}
+
+dokka {
+  outputFormat = 'html'
+  outputDirectory = "$buildDir/javadoc"
+  packageOptions {
+    prefix = "live.stream.theq.theqkit.data.app"
+    suppress = true
+  }
+}
+
+group = POM_GROUP_ID
+version = POM_VERSION
+
+publishing {
+  publications {
+    distributed(MavenPublication) {
+      groupId POM_GROUP_ID
+      artifactId POM_ARTIFACT_ID
+      version POM_VERSION
+      artifact(bundleReleaseAar)
+      // TODO add kotlin documentation
+      //generate pom nodes for dependencies
+      pom.withXml {
+        def dependenciesNode = asNode().appendNode('dependencies')
+        configurations.implementation.allDependencies.each { dependency ->
+          if (dependency.group != null && dependency.version != null) {
+            def dependencyNode = dependenciesNode.appendNode('dependency')
+            dependencyNode.appendNode('groupId', dependency.group)
+            dependencyNode.appendNode('artifactId', dependency.name)
+            dependencyNode.appendNode('version', dependency.version)
+          }
+        }
+      }
+    }
+  }
+}

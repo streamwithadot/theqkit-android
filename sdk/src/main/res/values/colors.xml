@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="theq_sdk_pink_no_override">#E63462</color>
+
+  <color name="theq_sdk_color_primary">#333645</color>
+  <color name="theq_sdk_color_primary_dark">#333645</color>
+  <color name="theq_sdk_color_accent">#E63462</color>
+
+  <color name="theq_sdk_white">#FFFFFF</color>
+  <color name="theq_sdk_black">#000000</color>
+  <color name="theq_sdk_gray">#333645</color>
+  <color name="theq_sdk_blue">#4A90E2</color>
+  <color name="theq_sdk_transparent">#00000000</color>
+  <color name="theq_sdk_semi_transparent_accent">#E6E63462</color>
+
+  <color name="theq_sdk_selected_green">#E600A878</color>
+  <color name="theq_sdk_choice_progress_tint">#B3B7C3</color>
+  <color name="theq_sdk_plus_one_background">@color/theq_sdk_blue</color>
+
+  <color name="theq_sdk_black_15p_transparent">#26000000</color>
+  <color name="theq_sdk_black_30p_transparent">#48000000</color>
+  <color name="theq_sdk_black_50p_transparent">#80000000</color>
+  <color name="theq_sdk_white_40p_transparent">#66FFFFFF</color>
+  <color name="theq_sdk_white_50p_transparent">#80FFFFFF</color>
+  <color name="theq_sdk_white_70p_transparent">#B3FFFFFF</color>
+  <color name="theq_sdk_white_80p_transparent">#CCFFFFFF</color>
+
+
+  <color name="theq_sdk_game_overlay_default">#F0E63462</color>
+  <color name="theq_sdk_game_overlay_popular_choice">#F0468EE5</color>
+  <color name="theq_sdk_game_overlay_correct">#E632C274</color>
+  <color name="theq_sdk_game_overlay_incorrect">#E6E63462</color>
+
+</resources>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theq_sdk_gray">
+
+  <fragment
+      android:id="@+id/playerFragment"
+      android:name="live.stream.theq.theqkit.ui.player.PlayerFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:layout="@layout/theq_sdk_fragment_game_player"
+      />
+
+  <ProgressBar
+      android:id="@+id/loading"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:visibility="gone" />
+
+  <TextView
+      android:id="@+id/videoErrorMessage"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:text="@string/theq_sdk_video_error_message"
+      android:textColor="@color/theq_sdk_white"
+      android:visibility="gone"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/loading"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="60dp"
+      android:visibility="gone">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:background="@color/theq_sdk_color_accent"
+        android:text=" 33 Winners! "
+        android:textColor="@color/theq_sdk_white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/prize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/textView4"
+        android:textColor="@color/theq_sdk_white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        tools:text="$250 Prize" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/prize"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+  </RelativeLayout>
+
+  <fragment
+      android:id="@+id/questionFragment"
+      android:name="live.stream.theq.theqkit.ui.game.QuestionFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:layout="@layout/theq_sdk_fragment_question"
+     />
+
+  <RelativeLayout
+      android:id="@+id/statsLayout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_marginLeft="16dp"
+      android:layout_marginTop="24dp">
+
+    <TextView
+        android:id="@+id/viewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp"
+        android:drawableLeft="@drawable/theq_sdk_ic_person_white_24dp"
+        android:text="1"
+        android:textColor="@color/theq_sdk_white"
+        android:textSize="18dp"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/heartEligible"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/viewCount"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/theq_sdk_heart_game"
+        tools:visibility="visible"/>
+
+  </RelativeLayout>
+
+
+  <TextView
+      android:id="@+id/eliminatedNotification"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@id/statsLayout"
+      android:layout_below="@id/statsLayout"
+      android:layout_marginTop="5dp"
+      android:text="@string/theq_sdk_eliminated"
+      android:visibility="gone"
+      style="@style/theq_sdk_eliminated_notification_style"
+      />
+
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="16dp"
+      android:layout_marginTop="16dp"
+      android:layout_alignParentRight="true">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:srcCompat="@drawable/theq_sdk_white_logo"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/questionNumberText"
+        android:layout_width="wrap_content"
+        android:minWidth="40dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="6dp"
+        android:layout_centerHorizontal="true"
+        tools:text="Q2"
+        android:textColor="@color/theq_sdk_white"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@drawable/theq_sdk_rounded_white40_background"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+  </RelativeLayout>
+
+  <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/usedHeartAnimationView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+      app:lottie_fileName="theq_sdk_heart_use.json"
+      android:visibility="gone"/>
+
+</RelativeLayout>
+

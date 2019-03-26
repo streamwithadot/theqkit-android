@@ -78,10 +78,19 @@ dependencies {
 }
 
 dokka {
-  outputFormat = 'html'
+  outputFormat = 'javadoc'
   outputDirectory = "$buildDir/javadoc"
   packageOptions {
     prefix = "live.stream.theq.theqkit.data.app"
     suppress = true
   }
+}
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+  classifier = 'javadoc'
+  from "$buildDir/javadoc"
+}
+
+artifacts {
+  archives javadocJar
 }

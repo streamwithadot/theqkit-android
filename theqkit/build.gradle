@@ -4,11 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'maven-publish'
 
 androidExtensions {
   experimental = true
 }
+
+group = POM_GROUP_ID
+version = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
 
 android {
   compileSdkVersion 28
@@ -17,7 +19,7 @@ android {
     minSdkVersion 21
     targetSdkVersion 28
     versionCode 1
-    versionName POM_VERSION
+    versionName version
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -81,32 +83,5 @@ dokka {
   packageOptions {
     prefix = "live.stream.theq.theqkit.data.app"
     suppress = true
-  }
-}
-
-group = POM_GROUP_ID
-version = POM_VERSION
-
-publishing {
-  publications {
-    distributed(MavenPublication) {
-      groupId POM_GROUP_ID
-      artifactId POM_ARTIFACT_ID
-      version POM_VERSION
-      artifact(bundleReleaseAar)
-      // TODO add kotlin documentation
-      //generate pom nodes for dependencies
-      pom.withXml {
-        def dependenciesNode = asNode().appendNode('dependencies')
-        configurations.implementation.allDependencies.each { dependency ->
-          if (dependency.group != null && dependency.version != null) {
-            def dependencyNode = dependenciesNode.appendNode('dependency')
-            dependencyNode.appendNode('groupId', dependency.group)
-            dependencyNode.appendNode('artifactId', dependency.name)
-            dependencyNode.appendNode('version', dependency.version)
-          }
-        }
-      }
-    }
   }
 }

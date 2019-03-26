@@ -1,2 +1,1 @@
-include ':sdk'
-rootProject.name = 'theqkit'
+include ':theqkit'

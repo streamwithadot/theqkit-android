@@ -30,7 +30,7 @@ internal class WinnersRecyclerAdapter(
   override fun getItemCount() = winners.profiles.size
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-      LayoutInflater.from(parent.context).inflate(R.layout.theq_sdk_winner_item, parent, false)
+      LayoutInflater.from(parent.context).inflate(R.layout.theqkit_winner_item, parent, false)
   )
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {

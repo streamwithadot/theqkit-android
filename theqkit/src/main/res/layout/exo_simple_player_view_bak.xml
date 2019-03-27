@@ -22,7 +22,7 @@
     <View android:id="@id/exo_shutter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/theq_sdk_color_primary_dark"/>
+        android:background="@color/theqkit_color_primary_dark"/>
 
     <ImageView android:id="@id/exo_artwork"
         android:layout_width="match_parent"

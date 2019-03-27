@@ -15,13 +15,13 @@ import androidx.lifecycle.ViewModelProviders
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.cashoutAllowedGroup
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.cashoutMessage
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.dismiss
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.emailEditText
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.loadedGroup
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.loadingSpinner
-import kotlinx.android.synthetic.main.theq_sdk_fragment_cashout_dialog.requestCashout
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.cashoutAllowedGroup
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.cashoutMessage
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.dismiss
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.emailEditText
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.loadedGroup
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.loadingSpinner
+import kotlinx.android.synthetic.main.theqkit_fragment_cashout_dialog.requestCashout
 
 import live.stream.theq.theqkit.R
 import java.math.BigDecimal
@@ -36,7 +36,7 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SDKDialogFragment)
+    setStyle(DialogFragment.STYLE_NO_TITLE, R.style.TheQKit_DialogFragment)
 
     viewModel = ViewModelProviders.of(this)
         .get(CashoutViewModel::class.java)
@@ -47,7 +47,7 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_cashout_dialog, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_cashout_dialog, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,18 +78,18 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
     viewModel.userLiveData.observe(this, Observer { user ->
       context?.let { ctx ->
         if (user == null) {
-          showErrorMessageView(ctx.getString(R.string.theq_sdk_cashout_user_load_failure))
+          showErrorMessageView(ctx.getString(R.string.theqkit_cashout_user_load_failure))
           return@Observer
         }
 
         emailEditText.setText(user.email ?: "")
-        val decimalFormat = DecimalFormat(ctx.getString(R.string.theq_sdk_full_currency_format))
+        val decimalFormat = DecimalFormat(ctx.getString(R.string.theqkit_full_currency_format))
         val balance = decimalFormat.format(user.balance)
 
-        if(user.balance >= BigDecimal(resources.getInteger(R.integer.theq_sdk_cashout_minimum))) {
+        if(user.balance >= BigDecimal(resources.getInteger(R.integer.theqkit_cashout_minimum))) {
           showCashoutEntryView(balance)
         } else {
-          showErrorMessageView(resources.getString(R.string.theq_sdk_cashout_minimum_message, balance))
+          showErrorMessageView(resources.getString(R.string.theqkit_cashout_minimum_message, balance))
         }
       }
     })
@@ -98,7 +98,7 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
       context?.let {
         requestCashout.isEnabled = isValid
         val textColorResource =
-          if(isValid) { R.color.theq_sdk_color_accent } else { R.color.theq_sdk_black }
+          if(isValid) { R.color.theqkit_color_accent } else { R.color.theqkit_black }
         requestCashout.setTextColor(ContextCompat.getColor(it, textColorResource))
       }
     })
@@ -129,7 +129,7 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
 
   private fun showCashoutEntryView(balance: String) {
     context?.let {
-      cashoutMessage.text = it.getString(R.string.theq_sdk_cashout_message, balance)
+      cashoutMessage.text = it.getString(R.string.theqkit_cashout_message, balance)
       cashoutAllowedGroup.visibility = View.VISIBLE
     }
   }
@@ -137,7 +137,7 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
   private fun showErrorMessageView(message: String) {
     context?.let {
       cashoutMessage.text = message
-      dismiss.setTextColor(ContextCompat.getColor(it, R.color.theq_sdk_color_accent))
+      dismiss.setTextColor(ContextCompat.getColor(it, R.color.theqkit_color_accent))
       cashoutAllowedGroup.visibility = View.GONE
     }
   }
@@ -145,7 +145,7 @@ internal class CashoutDialogFragment : AppCompatDialogFragment() {
   private fun showDismissingMessageView(message: String) {
     context?.let {
       cashoutMessage.text = message
-      dismiss.setTextColor(ContextCompat.getColor(it, R.color.theq_sdk_color_accent))
+      dismiss.setTextColor(ContextCompat.getColor(it, R.color.theqkit_color_accent))
       cashoutAllowedGroup.visibility = View.GONE
 
       val subscription = Observable

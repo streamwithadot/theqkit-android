@@ -10,7 +10,7 @@
     <activity
         android:name=".ui.game.SDKGameActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/TheQ.SDK.VideoTheme"
+        android:theme="@style/TheQKit.VideoTheme"
         android:windowSoftInputMode="adjustResize"/>
 
   </application>

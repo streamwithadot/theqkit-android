@@ -1,5 +1,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
   <corners android:radius="25dp" />
-  <solid android:color="@color/theq_sdk_white" />
+  <solid android:color="@color/theqkit_white" />
 </shape>

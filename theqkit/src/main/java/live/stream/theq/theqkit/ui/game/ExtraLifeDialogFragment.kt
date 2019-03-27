@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import kotlinx.android.synthetic.main.theq_sdk_fragment_extra_life_dialog.accept
-import kotlinx.android.synthetic.main.theq_sdk_fragment_extra_life_dialog.deny
+import kotlinx.android.synthetic.main.theqkit_fragment_extra_life_dialog.accept
+import kotlinx.android.synthetic.main.theqkit_fragment_extra_life_dialog.deny
 import live.stream.theq.theqkit.R
 
 @Keep
@@ -18,7 +18,7 @@ internal class ExtraLifeDialogFragment : DialogFragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_extra_life_dialog, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_extra_life_dialog, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

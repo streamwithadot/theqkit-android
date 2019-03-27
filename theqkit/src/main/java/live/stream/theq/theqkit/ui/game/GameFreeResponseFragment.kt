@@ -16,15 +16,15 @@ import android.content.Context
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.Keep
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.submissionText
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.submitButton
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.responseGroup
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.responseText
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.submitGroup
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.topChoice1
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.topChoice2
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.topChoice3
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_free_response.topChoicesLayout
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.submissionText
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.submitButton
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.responseGroup
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.responseText
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.submitGroup
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.topChoice1
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.topChoice2
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.topChoice3
+import kotlinx.android.synthetic.main.theqkit_fragment_game_free_response.topChoicesLayout
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.Question
 import live.stream.theq.theqkit.data.sdk.QuestionResultState
@@ -80,7 +80,7 @@ internal class GameFreeResponseFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_game_free_response, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_game_free_response, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

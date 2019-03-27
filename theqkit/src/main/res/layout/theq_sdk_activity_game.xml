@@ -6,14 +6,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theq_sdk_gray">
+    android:background="@color/theqkit_gray">
 
   <fragment
       android:id="@+id/playerFragment"
       android:name="live.stream.theq.theqkit.ui.player.PlayerFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:layout="@layout/theq_sdk_fragment_game_player"
+      tools:layout="@layout/theqkit_fragment_game_player"
       />
 
   <ProgressBar
@@ -29,8 +29,8 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
-      android:text="@string/theq_sdk_video_error_message"
-      android:textColor="@color/theq_sdk_white"
+      android:text="@string/theqkit_video_error_message"
+      android:textColor="@color/theqkit_white"
       android:visibility="gone"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
@@ -48,9 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:background="@color/theq_sdk_color_accent"
+        android:background="@color/theqkit_color_accent"
         android:text=" 33 Winners! "
-        android:textColor="@color/theq_sdk_white"
+        android:textColor="@color/theqkit_white"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView4"
         android:layout_below="@+id/textView4"
-        android:textColor="@color/theq_sdk_white"
+        android:textColor="@color/theqkit_white"
         android:textSize="40sp"
         android:textStyle="bold"
         tools:text="$250 Prize" />
@@ -80,7 +80,7 @@
       android:name="live.stream.theq.theqkit.ui.game.QuestionFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:layout="@layout/theq_sdk_fragment_question"
+      tools:layout="@layout/theqkit_fragment_question"
      />
 
   <RelativeLayout
@@ -97,9 +97,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="12dp"
-        android:drawableLeft="@drawable/theq_sdk_ic_person_white_24dp"
+        android:drawableLeft="@drawable/theqkit_ic_person_white_24dp"
         android:text="1"
-        android:textColor="@color/theq_sdk_white"
+        android:textColor="@color/theqkit_white"
         android:textSize="18dp"
         android:visibility="invisible"
         tools:visibility="visible"/>
@@ -111,7 +111,7 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/viewCount"
         android:visibility="invisible"
-        app:srcCompat="@drawable/theq_sdk_heart_game"
+        app:srcCompat="@drawable/theqkit_heart_game"
         tools:visibility="visible"/>
 
   </RelativeLayout>
@@ -124,9 +124,9 @@
       android:layout_alignLeft="@id/statsLayout"
       android:layout_below="@id/statsLayout"
       android:layout_marginTop="5dp"
-      android:text="@string/theq_sdk_eliminated"
+      android:text="@string/theqkit_eliminated"
       android:visibility="gone"
-      style="@style/theq_sdk_eliminated_notification_style"
+      style="@style/TheQKit_Eliminated_Notification_Style"
       />
 
   <RelativeLayout
@@ -140,7 +140,7 @@
         android:id="@+id/imageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        app:srcCompat="@drawable/theq_sdk_white_logo"
+        app:srcCompat="@drawable/theqkit_white_logo"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -152,11 +152,11 @@
         android:layout_marginTop="6dp"
         android:layout_centerHorizontal="true"
         tools:text="Q2"
-        android:textColor="@color/theq_sdk_white"
+        android:textColor="@color/theqkit_white"
         android:textSize="12dp"
         android:textStyle="bold"
         android:gravity="center"
-        android:background="@drawable/theq_sdk_rounded_white40_background"
+        android:background="@drawable/theqkit_rounded_white40_background"
         android:paddingTop="1dp"
         android:paddingBottom="1dp"
         android:paddingLeft="8dp"
@@ -171,7 +171,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scaleType="centerCrop"
-      app:lottie_fileName="theq_sdk_heart_use.json"
+      app:lottie_fileName="theqkit_heart_use.json"
       android:visibility="gone"/>
 
 </RelativeLayout>

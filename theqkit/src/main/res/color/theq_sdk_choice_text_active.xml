@@ -1,5 +1,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:state_pressed="true" android:color="@color/theq_sdk_black" />
-  <item android:state_selected="true" android:color="@color/theq_sdk_black" />
-  <item android:color="@color/theq_sdk_white" />
+  <item android:state_pressed="true" android:color="@color/theqkit_black" />
+  <item android:state_selected="true" android:color="@color/theqkit_black" />
+  <item android:color="@color/theqkit_white" />
 </selector>

@@ -11,10 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import kotlinx.android.synthetic.main.theq_sdk_fragment_question.animationView
-import kotlinx.android.synthetic.main.theq_sdk_fragment_question.navSpacer
-import kotlinx.android.synthetic.main.theq_sdk_fragment_question.questionStatus
-import kotlinx.android.synthetic.main.theq_sdk_fragment_question.questionText
+import kotlinx.android.synthetic.main.theqkit_fragment_question.animationView
+import kotlinx.android.synthetic.main.theqkit_fragment_question.navSpacer
+import kotlinx.android.synthetic.main.theqkit_fragment_question.questionStatus
+import kotlinx.android.synthetic.main.theqkit_fragment_question.questionText
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_ENDED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_RESULT
@@ -68,7 +68,7 @@ internal class QuestionFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_question, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_question, container, false)
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -115,11 +115,11 @@ internal class QuestionFragment : Fragment() {
 
     if (isPopularChoice) {
       hideQuestionStatus() // hide to make sure we control reappearing
-      backgroundColorId = R.color.theq_sdk_game_overlay_popular_choice
+      backgroundColorId = R.color.theqkit_game_overlay_popular_choice
     } else {
-      val strQuestionNum = getString(R.string.theq_sdk_question_number, question.questionNumber)
-      showQuestionStatus(strQuestionNum, R.color.theq_sdk_color_accent, null)
-      backgroundColorId = R.color.theq_sdk_game_overlay_default
+      val strQuestionNum = getString(R.string.theqkit_question_number, question.questionNumber)
+      showQuestionStatus(strQuestionNum, R.color.theqkit_color_accent, null)
+      backgroundColorId = R.color.theqkit_game_overlay_default
     }
 
     show(backgroundColorId)
@@ -134,15 +134,15 @@ internal class QuestionFragment : Fragment() {
   private fun onQuestionResult(question: QuestionResultState) {
     if (question.wasUserCorrect) {
       playAnimation(ANIM_CORRECT)
-      showQuestionStatus("Correct!", R.color.theq_sdk_selected_green)
-      show(R.color.theq_sdk_game_overlay_correct)
+      showQuestionStatus("Correct!", R.color.theqkit_selected_green)
+      show(R.color.theqkit_game_overlay_correct)
       gameViewModel.game.value?.let { Events.publish(
           CorrectSubmissionEvent(it, question)) }
     } else {
       playAnimation(ANIM_INCORRECT)
       val label = if (question.serverReceivedSelection == null) "No Answer!" else "Wrong Answer!"
-      showQuestionStatus(label, R.color.theq_sdk_color_accent)
-      show(R.color.theq_sdk_game_overlay_incorrect)
+      showQuestionStatus(label, R.color.theqkit_color_accent)
+      show(R.color.theqkit_game_overlay_incorrect)
 
       question.serverReceivedSelection?.let {
         gameViewModel.game.value?.let { Events.publish(
@@ -171,7 +171,7 @@ internal class QuestionFragment : Fragment() {
   private fun handleQuestionEnd() {
     questionEndHandler.removeCallbacksAndMessages(null)
     scheduleHide(1800)
-    showQuestionStatus("Time's Up!", R.color.theq_sdk_color_accent)
+    showQuestionStatus("Time's Up!", R.color.theqkit_color_accent)
   }
 
   private fun showQuestionStatus(text: String, colorId: Int, hideDelayMillis: Long? = 2000) {
@@ -237,12 +237,12 @@ internal class QuestionFragment : Fragment() {
   companion object {
 
     private val DefaultTimer = CountdownAnimation(
-        "theq_sdk_timer_10s.json", 10f)
+        "theqkit_timer_10s.json", 10f)
     private val PopularChoiceTimer =
       CountdownAnimation(
-          "theq_sdk_timer_13s.json", 13f)
-    private const val ANIM_CORRECT = "theq_sdk_correct.json"
-    private const val ANIM_INCORRECT = "theq_sdk_incorrect.json"
+          "theqkit_timer_13s.json", 13f)
+    private const val ANIM_CORRECT = "theqkit_correct.json"
+    private const val ANIM_INCORRECT = "theqkit_incorrect.json"
 
   }
 

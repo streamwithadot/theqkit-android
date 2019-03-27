@@ -12,12 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.amulyakhare.textdrawable.TextDrawable
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_button.choiceImage
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_button.choiceProgress
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_button.choiceText
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_button.plusOne
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_button.responsesText
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_button.submitProgress
+import kotlinx.android.synthetic.main.theqkit_fragment_game_button.choiceImage
+import kotlinx.android.synthetic.main.theqkit_fragment_game_button.choiceProgress
+import kotlinx.android.synthetic.main.theqkit_fragment_game_button.choiceText
+import kotlinx.android.synthetic.main.theqkit_fragment_game_button.plusOne
+import kotlinx.android.synthetic.main.theqkit_fragment_game_button.responsesText
+import kotlinx.android.synthetic.main.theqkit_fragment_game_button.submitProgress
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.ChoiceResultState
 import live.stream.theq.theqkit.data.sdk.ChoiceState
@@ -88,7 +88,7 @@ internal class GameButtonFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_game_button, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_game_button, container, false)
   }
 
   override fun onAttach(context: Context) {
@@ -108,7 +108,7 @@ internal class GameButtonFragment : Fragment() {
           ?.let { selectButton() }
     }
 
-    getColor(R.color.theq_sdk_plus_one_background)?.let {
+    getColor(R.color.theqkit_plus_one_background)?.let {
       plusOne.setImageDrawable(TextDrawable.builder().buildRound("+1", it))
     }
   }
@@ -141,34 +141,34 @@ internal class GameButtonFragment : Fragment() {
     plusOne.visibility = View.INVISIBLE
 
     responsesText.text = choice.responseCount.toString()
-    getColor(R.color.theq_sdk_white)?.let(responsesText::setTextColor)
+    getColor(R.color.theqkit_white)?.let(responsesText::setTextColor)
 
     choiceText.text = choice.choiceText
-    getColor(R.color.theq_sdk_white)?.let(choiceText::setTextColor)
+    getColor(R.color.theqkit_white)?.let(choiceText::setTextColor)
 
     val isSelected = isSameChoiceAsButton(gameViewModel.selectedChoice.value)
 
     if (choice.isCorrect && isSelected) {
-      getDrawable(R.drawable.theq_sdk_choice_background_selected)?.let { layout?.background = it }
-      getDrawable(R.drawable.theq_sdk_correct_selected)?.let(choiceImage::setImageDrawable)
-      getDrawable(R.drawable.theq_sdk_progress_bar_selected)?.let(choiceProgress::setProgressDrawable)
-      getColor(R.color.theq_sdk_selected_green)?.let(choiceText::setTextColor)
-      getColor(R.color.theq_sdk_selected_green)?.let(responsesText::setTextColor)
+      getDrawable(R.drawable.theqkit_choice_background_selected)?.let { layout?.background = it }
+      getDrawable(R.drawable.theqkit_correct_selected)?.let(choiceImage::setImageDrawable)
+      getDrawable(R.drawable.theqkit_progress_bar_selected)?.let(choiceProgress::setProgressDrawable)
+      getColor(R.color.theqkit_selected_green)?.let(choiceText::setTextColor)
+      getColor(R.color.theqkit_selected_green)?.let(responsesText::setTextColor)
       plusOne.visibility = View.VISIBLE
     } else if (choice.isCorrect && !isSelected) {
-      getDrawable(R.drawable.theq_sdk_correct_unselected)?.let(choiceImage::setImageDrawable)
-      getDrawable(R.drawable.theq_sdk_progress_bar_not_selected)?.let(choiceProgress::setProgressDrawable)
-      getDrawable(R.drawable.theq_sdk_choice_background_active)?.let { layout?.background = it }
+      getDrawable(R.drawable.theqkit_correct_unselected)?.let(choiceImage::setImageDrawable)
+      getDrawable(R.drawable.theqkit_progress_bar_not_selected)?.let(choiceProgress::setProgressDrawable)
+      getDrawable(R.drawable.theqkit_choice_background_active)?.let { layout?.background = it }
     } else if (isSelected) {
-      getDrawable(R.drawable.theq_sdk_choice_background_selected)?.let { layout?.background = it }
-      getDrawable(R.drawable.theq_sdk_incorrect_selected)?.let(choiceImage::setImageDrawable)
-      getDrawable(R.drawable.theq_sdk_progress_bar_selected)?.let(choiceProgress::setProgressDrawable)
-      getColor(R.color.theq_sdk_color_accent)?.let(choiceText::setTextColor)
-      getColor(R.color.theq_sdk_color_accent)?.let(responsesText::setTextColor)
+      getDrawable(R.drawable.theqkit_choice_background_selected)?.let { layout?.background = it }
+      getDrawable(R.drawable.theqkit_incorrect_selected)?.let(choiceImage::setImageDrawable)
+      getDrawable(R.drawable.theqkit_progress_bar_selected)?.let(choiceProgress::setProgressDrawable)
+      getColor(R.color.theqkit_color_accent)?.let(choiceText::setTextColor)
+      getColor(R.color.theqkit_color_accent)?.let(responsesText::setTextColor)
     } else {
-      getDrawable(R.drawable.theq_sdk_incorrect_unselected)?.let(choiceImage::setImageDrawable)
-      getDrawable(R.drawable.theq_sdk_progress_bar_not_selected)?.let(choiceProgress::setProgressDrawable)
-      getDrawable(R.drawable.theq_sdk_choice_background_unselected)?.let { layout?.background = it }
+      getDrawable(R.drawable.theqkit_incorrect_unselected)?.let(choiceImage::setImageDrawable)
+      getDrawable(R.drawable.theqkit_progress_bar_not_selected)?.let(choiceProgress::setProgressDrawable)
+      getDrawable(R.drawable.theqkit_choice_background_unselected)?.let { layout?.background = it }
     }
 
     val choicePercentage = calculatePercentage(choice.responseCount, choice.totalResponseCount)
@@ -196,9 +196,9 @@ internal class GameButtonFragment : Fragment() {
     plusOne.visibility = View.INVISIBLE
     choiceProgress.progress = 0
     responsesText.text = ""
-    getDrawable(R.drawable.theq_sdk_choice_background_active)?.let { layout?.background = it }
+    getDrawable(R.drawable.theqkit_choice_background_active)?.let { layout?.background = it }
     choiceText.text = ""
-    getColorStateList(R.color.theq_sdk_choice_text_active)?.let(choiceText::setTextColor)
+    getColorStateList(R.color.theqkit_choice_text_active)?.let(choiceText::setTextColor)
     choiceImage.visibility = View.GONE
   }
 

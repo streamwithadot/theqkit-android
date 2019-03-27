@@ -44,7 +44,7 @@ internal class CashoutViewModel : ViewModel(), CoroutineScope {
     val userId = prefsHelper.userId
 
     if (userId == null) {
-      _errorMessageResLiveData.value = R.string.theq_sdk_cashout_not_logged_in
+      _errorMessageResLiveData.value = R.string.theqkit_cashout_not_logged_in
     } else {
       launch {
         val user = try {
@@ -57,7 +57,7 @@ internal class CashoutViewModel : ViewModel(), CoroutineScope {
         if (user != null) {
           _userLiveData.value = user
         } else {
-          _errorMessageResLiveData.value = R.string.theq_sdk_cashout_user_load_failure
+          _errorMessageResLiveData.value = R.string.theqkit_cashout_user_load_failure
         }
       }
     }
@@ -67,7 +67,7 @@ internal class CashoutViewModel : ViewModel(), CoroutineScope {
     launch {
       val userId = prefsHelper.userId
       if (userId == null) {
-        _errorMessageResLiveData.value = R.string.theq_sdk_cashout_not_logged_in
+        _errorMessageResLiveData.value = R.string.theqkit_cashout_not_logged_in
       } else {
         _loadingLiveData.value = true
         if (email == prefsHelper.email) {
@@ -96,7 +96,7 @@ internal class CashoutViewModel : ViewModel(), CoroutineScope {
     return if (updatedEmail != null) {
       true
     } else {
-      _errorMessageResLiveData.value = R.string.theq_sdk_cashout_email_update_failure
+      _errorMessageResLiveData.value = R.string.theqkit_cashout_email_update_failure
       false
     }
   }
@@ -110,9 +110,9 @@ internal class CashoutViewModel : ViewModel(), CoroutineScope {
     }
 
     if (isCashoutSuccessful) {
-      _successMessageResLiveData.value = R.string.theq_sdk_cashout_success_message
+      _successMessageResLiveData.value = R.string.theqkit_cashout_success_message
     } else {
-      _errorMessageResLiveData.value = R.string.theq_sdk_cashout_unknown_error
+      _errorMessageResLiveData.value = R.string.theqkit_cashout_unknown_error
     }
   }
 

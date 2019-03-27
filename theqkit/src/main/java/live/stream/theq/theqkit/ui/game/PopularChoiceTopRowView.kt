@@ -8,9 +8,9 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.Keep
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.theq_sdk_row_popular_choice_top.view.choiceText
-import kotlinx.android.synthetic.main.theq_sdk_row_popular_choice_top.view.percentage
-import kotlinx.android.synthetic.main.theq_sdk_row_popular_choice_top.view.rank
+import kotlinx.android.synthetic.main.theqkit_row_popular_choice_top.view.choiceText
+import kotlinx.android.synthetic.main.theqkit_row_popular_choice_top.view.percentage
+import kotlinx.android.synthetic.main.theqkit_row_popular_choice_top.view.rank
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.ChoiceResultState
 import java.text.DecimalFormat
@@ -27,7 +27,7 @@ internal class PopularChoiceTopRowView @JvmOverloads constructor(
 
   init {
     LayoutInflater.from(context)
-        .inflate(R.layout.theq_sdk_row_popular_choice_top, this, true)
+        .inflate(R.layout.theqkit_row_popular_choice_top, this, true)
 
     orientation = HORIZONTAL
     gravity = Gravity.CENTER_VERTICAL
@@ -41,16 +41,16 @@ internal class PopularChoiceTopRowView @JvmOverloads constructor(
     }
 
     if (userChoiceText != null && userChoiceText == choiceResultState.id) {
-      setBackgroundColor(ContextCompat.getColor(context, R.color.theq_sdk_white_40p_transparent))
+      setBackgroundColor(ContextCompat.getColor(context, R.color.theqkit_white_40p_transparent))
     } else {
       background = null
     }
 
     this.rank.text = rank.toString()
     if (wasUserCorrect) {
-      this.rank.setTextColor(ContextCompat.getColor(context, R.color.theq_sdk_game_overlay_correct))
+      this.rank.setTextColor(ContextCompat.getColor(context, R.color.theqkit_game_overlay_correct))
     } else {
-      this.rank.setTextColor(ContextCompat.getColor(context, R.color.theq_sdk_game_overlay_incorrect))
+      this.rank.setTextColor(ContextCompat.getColor(context, R.color.theqkit_game_overlay_incorrect))
     }
 
     this.choiceText.text = choiceResultState.id

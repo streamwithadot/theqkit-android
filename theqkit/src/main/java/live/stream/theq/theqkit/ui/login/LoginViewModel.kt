@@ -45,7 +45,7 @@ internal class LoginViewModel(
   init {
     _loginStateLiveData.value =
       LoginState(isLoading = true,
-          loadingMessage = R.string.theq_sdk_logging_in)
+          loadingMessage = R.string.theqkit_logging_in)
     login()
   }
 
@@ -80,7 +80,7 @@ internal class LoginViewModel(
   fun signupClicked(suggestedUsername: String?) {
     if (loginStateLiveData.value?.isUsernameQueryValid == true) {
       _loginStateLiveData.value = _loginStateLiveData.value?.copy(
-          isLoading = true, loadingMessage = R.string.theq_sdk_creating_account
+          isLoading = true, loadingMessage = R.string.theqkit_creating_account
       )
       launch {
         signup(suggestedUsername)
@@ -177,5 +177,5 @@ internal data class LoginState(
   val isLoading: Boolean = false,
   val isUsernameQueryValid: Boolean = false,
   val isUsernameQueryInFlight: Boolean = false,
-  @StringRes val loadingMessage: Int = R.string.theq_sdk_logging_in
+  @StringRes val loadingMessage: Int = R.string.theqkit_logging_in
 )

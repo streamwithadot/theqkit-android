@@ -15,7 +15,7 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.theq_sdk_activity_game.*
+import kotlinx.android.synthetic.main.theqkit_activity_game.*
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.GAME_ENDED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.GAME_WINNERS
@@ -61,7 +61,7 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
         WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN
     )
-    setContentView(R.layout.theq_sdk_activity_game)
+    setContentView(R.layout.theqkit_activity_game)
     AndroidBug5497Workaround.assistActivity(this)
     loading.visibility = View.VISIBLE
 
@@ -167,7 +167,7 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
 
     showEliminatedNotification()
 
-    val dialogView = layoutInflater.inflate(R.layout.theq_sdk_late_join_dialog, null)
+    val dialogView = layoutInflater.inflate(R.layout.theqkit_late_join_dialog, null)
     AlertDialog.Builder(this).apply {
       setView(dialogView)
       create().apply {
@@ -223,17 +223,17 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
   private fun updateHeartIcon(canRedeemHeart: Boolean) {
     heartEligible.visibility = View.VISIBLE
     heartEligible.setImageResource(
-        if (canRedeemHeart) R.drawable.theq_sdk_heart_game else R.drawable.theq_sdk_heart_game_unavailable
+        if (canRedeemHeart) R.drawable.theqkit_heart_game else R.drawable.theqkit_heart_game_unavailable
     )
   }
 
   private fun showBackPressedWarning() {
     if (this.isDestroyed) return
     AlertDialog.Builder(this)
-        .setTitle(resources.getString(R.string.theq_sdk_leave_game_title))
-        .setMessage(resources.getString(R.string.theq_sdk_leave_game_message))
-        .setPositiveButton(resources.getString(R.string.theq_sdk_leave)) { _, _ -> super.onBackPressed() }
-        .setNegativeButton(resources.getString(R.string.theq_sdk_cancel), null)
+        .setTitle(resources.getString(R.string.theqkit_leave_game_title))
+        .setMessage(resources.getString(R.string.theqkit_leave_game_message))
+        .setPositiveButton(resources.getString(R.string.theqkit_leave)) { _, _ -> super.onBackPressed() }
+        .setNegativeButton(resources.getString(R.string.theqkit_cancel), null)
         .create()
         .show()
   }
@@ -241,9 +241,9 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
   private fun showSubmissionFailedWarning() {
     if (this.isDestroyed) return
     AlertDialog.Builder(this)
-        .setTitle(getString(R.string.theq_sdk_submission_timed_out))
-        .setMessage(getString(R.string.theq_sdk_submission_timed_out_description))
-        .setPositiveButton(getString(R.string.theq_sdk_continue_playing), null)
+        .setTitle(getString(R.string.theqkit_submission_timed_out))
+        .setMessage(getString(R.string.theqkit_submission_timed_out_description))
+        .setPositiveButton(getString(R.string.theqkit_continue_playing), null)
         .create()
         .show()
   }

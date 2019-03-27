@@ -28,9 +28,9 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_player.loading
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_player.playerView
-import kotlinx.android.synthetic.main.theq_sdk_fragment_game_player.videoErrorMessage
+import kotlinx.android.synthetic.main.theqkit_fragment_game_player.loading
+import kotlinx.android.synthetic.main.theqkit_fragment_game_player.playerView
+import kotlinx.android.synthetic.main.theqkit_fragment_game_player.videoErrorMessage
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.events.LagRestartEvent
@@ -60,7 +60,7 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_game_player, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_game_player, container, false)
   }
 
   override fun onResume() {

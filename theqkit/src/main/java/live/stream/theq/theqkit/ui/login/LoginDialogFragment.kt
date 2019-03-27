@@ -14,14 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.cancel
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.entryGroup
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.inputNotifier
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.loadingGroup
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.loadingMessage
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.notifierProgress
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.submit
-import kotlinx.android.synthetic.main.theq_sdk_fragment_login_dialog.usernameEditText
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.cancel
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.entryGroup
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.inputNotifier
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.loadingGroup
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.loadingMessage
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.notifierProgress
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.submit
+import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.usernameEditText
 
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.AccountKitLogin
@@ -40,7 +40,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     isCancelable = false
-    setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SDKDialogFragment)
+    setStyle(DialogFragment.STYLE_NO_TITLE, R.style.TheQKit_DialogFragment)
 
     val loginAuthData = arguments!!.getParcelable<LoginAuthData>(
         KEY_LOGIN_AUTH_DATA)!!
@@ -59,7 +59,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_fragment_login_dialog, container, false)
+    return inflater.inflate(R.layout.theqkit_fragment_login_dialog, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,26 +86,26 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
           if (state.isUsernameQueryInFlight) {
             inputNotifier.visibility = View.INVISIBLE
             notifierProgress.visibility = View.VISIBLE
-            submit.setTextColor(ContextCompat.getColor(it, R.color.theq_sdk_black_50p_transparent))
+            submit.setTextColor(ContextCompat.getColor(it, R.color.theqkit_black_50p_transparent))
             submit.isEnabled = false
           } else {
             notifierProgress.visibility = View.INVISIBLE
             when {
               state.isUsernameQueryValid -> {
                 inputNotifier.visibility = View.INVISIBLE
-                submit.setTextColor(ContextCompat.getColor(it, R.color.theq_sdk_color_accent))
+                submit.setTextColor(ContextCompat.getColor(it, R.color.theqkit_color_accent))
                 submit.isEnabled = true
               }
               usernameEditText.text.toString().trim().isBlank() -> {
                 inputNotifier.visibility = View.INVISIBLE
                 submit.setTextColor(
-                    ContextCompat.getColor(it, R.color.theq_sdk_black_50p_transparent))
+                    ContextCompat.getColor(it, R.color.theqkit_black_50p_transparent))
                 submit.isEnabled = false
               }
               else -> {
                 inputNotifier.visibility = View.VISIBLE
                 submit.setTextColor(
-                    ContextCompat.getColor(it, R.color.theq_sdk_black_50p_transparent))
+                    ContextCompat.getColor(it, R.color.theqkit_black_50p_transparent))
                 submit.isEnabled = false
               }
             }

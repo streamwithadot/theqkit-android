@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="TheQ.SDK.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorPrimary">@color/theq_sdk_color_primary</item>
-    <item name="colorPrimaryDark">@color/theq_sdk_color_primary_dark</item>
-    <item name="colorAccent">@color/theq_sdk_color_accent</item>
+  <style name="TheQKit.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/theqkit_color_primary</item>
+    <item name="colorPrimaryDark">@color/theqkit_color_primary_dark</item>
+    <item name="colorAccent">@color/theqkit_color_accent</item>
   </style>
 
-  <style name="TheQ.SDK.VideoTheme" parent="TheQ.SDK.AppTheme">
+  <style name="TheQKit.VideoTheme" parent="TheQKit.AppTheme">
     <item name="android:windowTranslucentStatus">true</item>
     <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
-  <style name="TheQSdkWinner" parent="Theme.AppCompat.Dialog">
+  <style name="TheQKit.WinnerDialog" parent="Theme.AppCompat.Dialog">
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowIsFloating">false</item>
     <item name="android:windowFullscreen">true</item>
-    <item name="android:windowBackground">@color/theq_sdk_black_30p_transparent</item>
+    <item name="android:windowBackground">@color/theqkit_black_30p_transparent</item>
   </style>
 
-  <style name="theq_sdk_question_text_style">
+  <style name="TheQKit_Question_Text_Style">
     <item name="android:textSize">20dp</item>
     <item name="android:includeFontPadding">true</item>
     <item name="android:paddingTop">8dp</item>
@@ -28,34 +28,34 @@
     <item name="android:paddingRight">16dp</item>
   </style>
 
-  <style name="status_text_style">
-    <item name="android:background">@drawable/theq_sdk_eliminated_notification_background</item>
-    <item name="android:textColor">@color/theq_sdk_semi_transparent_accent</item>
+  <style name="TheQKit_Status_Text_Style">
+    <item name="android:background">@drawable/theqkit_eliminated_notification_background</item>
+    <item name="android:textColor">@color/theqkit_semi_transparent_accent</item>
     <item name="android:textSize">15dp</item>
     <item name="android:includeFontPadding">true</item>
     <item name="android:padding">15dp</item>
   </style>
 
-  <style name="SDKDialogFragment" parent="Theme.AppCompat.Light.Dialog.Alert">
-    <item name="colorPrimary">@color/theq_sdk_color_accent</item>
-    <item name="colorPrimaryDark">@color/theq_sdk_color_accent</item>
-    <item name="colorAccent">@color/theq_sdk_color_accent</item>
+  <style name="TheQKit.DialogFragment" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorPrimary">@color/theqkit_color_accent</item>
+    <item name="colorPrimaryDark">@color/theqkit_color_accent</item>
+    <item name="colorAccent">@color/theqkit_color_accent</item>
     <item name="android:windowNoTitle">true</item>
-    <item name="android:textColor">@color/theq_sdk_black</item>
+    <item name="android:textColor">@color/theqkit_black</item>
     <item name="android:backgroundDimEnabled">true</item>
   </style>
 
-  <style name="TransparentButton" parent="Widget.AppCompat.Button.Borderless">
+  <style name="TheQKit.TransparentButton" parent="Widget.AppCompat.Button.Borderless">
     <item name="android:colorButtonNormal">?attr/selectableItemBackground</item>
   </style>
 
-  <style name="theq_sdk_eliminated_notification_style">
-    <item name="android:background">@drawable/theq_sdk_eliminated_notification_background</item>
+  <style name="TheQKit_Eliminated_Notification_Style">
+    <item name="android:background">@drawable/theqkit_eliminated_notification_background</item>
     <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingRight">8dp</item>
     <item name="android:paddingTop">1dp</item>
     <item name="android:paddingBottom">1dp</item>
-    <item name="android:textColor">@color/theq_sdk_semi_transparent_accent</item>
+    <item name="android:textColor">@color/theqkit_semi_transparent_accent</item>
     <item name="android:textStyle">bold</item>
   </style>
 

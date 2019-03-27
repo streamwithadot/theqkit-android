@@ -9,12 +9,12 @@ import java.text.DecimalFormat
 object CurrencyHelper {
 
   fun getExactCurrency(context: Context, obj: Any): String {
-    val format = context.resources.getString(R.string.theq_sdk_full_currency_format)
+    val format = context.resources.getString(R.string.theqkit_full_currency_format)
     return DecimalFormat(format).format(obj)
   }
 
   fun getRoundedCurrency(context: Context, obj: Any): String {
-    val format = context.resources.getString(R.string.theq_sdk_rounded_currency_format)
+    val format = context.resources.getString(R.string.theqkit_rounded_currency_format)
     return DecimalFormat(format).format(obj)
   }
 }

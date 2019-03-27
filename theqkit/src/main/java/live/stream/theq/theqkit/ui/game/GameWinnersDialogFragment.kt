@@ -11,9 +11,9 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.IllegalStateException
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import kotlinx.android.synthetic.main.theq_sdk_winners_layout.prizeText
-import kotlinx.android.synthetic.main.theq_sdk_winners_layout.winnerRecyler
-import kotlinx.android.synthetic.main.theq_sdk_winners_layout.winnerText
+import kotlinx.android.synthetic.main.theqkit_winners_layout.prizeText
+import kotlinx.android.synthetic.main.theqkit_winners_layout.winnerRecyler
+import kotlinx.android.synthetic.main.theqkit_winners_layout.winnerText
 
 @Keep
 internal class GameWinnersDialogFragment : DialogFragment() {
@@ -22,13 +22,13 @@ internal class GameWinnersDialogFragment : DialogFragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setStyle(DialogFragment.STYLE_NORMAL, R.style.TheQSdkWinner)
+    setStyle(DialogFragment.STYLE_NORMAL, R.style.TheQKit_WinnerDialog)
   }
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.theq_sdk_winners_layout, container, false)
+    return inflater.inflate(R.layout.theqkit_winners_layout, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ internal class GameWinnersDialogFragment : DialogFragment() {
     val potSize = gameViewModel.gameResponse.reward
 
     winnerText.text =
-      resources.getQuantityString(R.plurals.theq_sdk_n_winners, winners.count, winners.count)
+      resources.getQuantityString(R.plurals.theqkit_n_winners, winners.count, winners.count)
 
     prizeText.text = CurrencyHelper.getExactCurrency(view.context, potSize)
 

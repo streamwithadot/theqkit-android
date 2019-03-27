@@ -16,7 +16,7 @@
       app:auto_show="false"
       app:resize_mode="zoom"
       android:keepScreenOn="true"
-      app:shutter_background_color="@color/theq_sdk_color_primary_dark" />
+      app:shutter_background_color="@color/theqkit_color_primary_dark" />
 
   <ProgressBar
       android:id="@+id/loading"
@@ -32,11 +32,11 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center_horizontal"
       android:layout_marginTop="8dp"
-      android:text="@string/theq_sdk_video_error_message"
-      android:textColor="@color/theq_sdk_white"
+      android:text="@string/theqkit_video_error_message"
+      android:textColor="@color/theqkit_white"
       android:visibility="gone"
       tools:visibility="visible"
-      tools:textColor="@color/theq_sdk_color_accent"
+      tools:textColor="@color/theqkit_color_accent"
       />
 
 </FrameLayout>

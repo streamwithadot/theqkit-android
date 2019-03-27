@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout"
-    android:background="@color/theq_sdk_game_overlay_default"
+    android:background="@color/theqkit_game_overlay_default"
     android:paddingBottom="16dp"
     android:paddingTop="16dp"
     android:visibility="invisible"
@@ -45,7 +45,7 @@
       android:layout_height="0dp"
       android:layout_gravity="center_horizontal"
       app:layout_constraintWidth_max="200dp"
-      app:lottie_fileName="theq_sdk_timer_10s.json"
+      app:lottie_fileName="theqkit_timer_10s.json"
       app:lottie_autoPlay="false"
       app:layout_constraintLeft_toLeftOf="@id/leftGuideline"
       app:layout_constraintRight_toRightOf="@id/rightGuideline"
@@ -76,7 +76,7 @@
       tools:text="Time's Up!"
       android:alpha="0"
       tools:alpha="1"
-      style="@style/status_text_style"
+      style="@style/TheQKit_Status_Text_Style"
       />
 
   <androidx.appcompat.widget.AppCompatTextView
@@ -87,9 +87,9 @@
       app:layout_constraintRight_toRightOf="@id/rightGuideline"
       app:layout_constraintBottom_toTopOf="@id/choicesContainer"
       android:layout_marginBottom="12dp"
-      android:textColor="@color/theq_sdk_white"
+      android:textColor="@color/theqkit_white"
       android:textStyle="bold"
-      style="@style/theq_sdk_question_text_style"
+      style="@style/TheQKit_Question_Text_Style"
       android:gravity="center"
       android:maxLines="3"
       app:autoSizeTextType="uniform"
@@ -107,7 +107,7 @@
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintBottom_toTopOf="@id/navSpacer"
       tools:layout_height="200dp"
-      tools:background="@color/theq_sdk_white_40p_transparent"
+      tools:background="@color/theqkit_white_40p_transparent"
       >
   </LinearLayout>
 

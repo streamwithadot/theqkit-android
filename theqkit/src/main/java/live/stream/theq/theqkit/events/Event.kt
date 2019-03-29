@@ -7,6 +7,10 @@ import java.util.UUID
 
 sealed class Event
 
+data class UserBannedEvent internal constructor(
+  val wasPreviouslyBanned: Boolean
+) : Event()
+
 data class ChoiceSelectedEvent internal constructor(
   val game: GameState,
   val choice: ChoiceState,

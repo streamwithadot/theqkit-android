@@ -5,6 +5,8 @@ import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import com.google.gson.Gson
 import live.stream.theq.theqkit.data.sdk.ApiError
+import live.stream.theq.theqkit.events.Events
+import live.stream.theq.theqkit.events.UserBannedEvent
 import live.stream.theq.theqkit.util.PrefsHelper
 
 internal class RequestInterceptor(private val prefsHelper: PrefsHelper, private val gson: Gson) : Interceptor {
@@ -23,7 +25,9 @@ internal class RequestInterceptor(private val prefsHelper: PrefsHelper, private 
         val apiError = gson
             .fromJson(response.peekBody(1000000).charStream(), ApiError::class.java)
         if (apiError.errorCode == "USER_BANNED") {
+          val wasPreviouslyBanned = prefsHelper.banned
           prefsHelper.banned = true
+          Events.publish(UserBannedEvent(wasPreviouslyBanned))
         }
       } catch (e: Exception) {}
     }

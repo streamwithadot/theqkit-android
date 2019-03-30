@@ -102,6 +102,12 @@ interface QuestionState {
   val questionText: String?
   val choices: List<ChoiceState>?
   val questionType: String
+
+  val isPopularChoice
+    get() = questionType == Question.TYPE_POPULAR
+
+  val isTrivia
+    get() = questionType == Question.TYPE_TRIVIA
 }
 
 data class QuestionStartState(

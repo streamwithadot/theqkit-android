@@ -1,5 +1,6 @@
 package live.stream.theq.theqkit.ui.game
 
+import android.animation.Animator
 import android.content.Context
 import androidx.lifecycle.Observer
 import android.os.Bundle
@@ -71,6 +72,25 @@ internal class QuestionFragment : Fragment() {
     return inflater.inflate(R.layout.theqkit_fragment_question, container, false)
   }
 
+  override fun onResume() {
+    super.onResume()
+
+    animationView.addAnimatorListener(object : Animator.AnimatorListener {
+      override fun onAnimationEnd(p0: Animator?) {
+        animationView.visibility = View.GONE
+      }
+      override fun onAnimationStart(p0: Animator?) {}
+      override fun onAnimationRepeat(p0: Animator?) {}
+      override fun onAnimationCancel(p0: Animator?) {}
+    })
+
+  }
+
+  override fun onPause() {
+    super.onPause()
+    animationView.removeAllAnimatorListeners()
+  }
+
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
@@ -132,26 +152,33 @@ internal class QuestionFragment : Fragment() {
   }
 
   private fun onQuestionResult(question: QuestionResultState) {
+    val resultAnimation: TimedAnimation
     if (question.wasUserCorrect) {
-      playAnimation(ANIM_CORRECT)
+      resultAnimation = if (question.isPopularChoice) {
+        PopularChoiceCorrectAnimation
+      } else {
+        DefaultCorrectAnimation
+      }
       showQuestionStatus("Correct!", R.color.theqkit_selected_green)
       show(R.color.theqkit_game_overlay_correct)
-      gameViewModel.game.value?.let { Events.publish(
-          CorrectSubmissionEvent(it, question)) }
+      gameViewModel.game.value?.let { Events.publish(CorrectSubmissionEvent(it, question)) }
     } else {
-      playAnimation(ANIM_INCORRECT)
+      resultAnimation = if (question.isPopularChoice) {
+        PopularChoiceIncorrectAnimation
+      } else {
+        DefaultIncorrectAnimation
+      }
       val label = if (question.serverReceivedSelection == null) "No Answer!" else "Wrong Answer!"
       showQuestionStatus(label, R.color.theqkit_color_accent)
       show(R.color.theqkit_game_overlay_incorrect)
 
       question.serverReceivedSelection?.let {
-        gameViewModel.game.value?.let { Events.publish(
-            IncorrectSubmissionEvent(it, question)) }
-      } ?: gameViewModel.game.value?.let { Events.publish(
-          NoSubmissionEvent(it)) }
+        gameViewModel.game.value?.let { Events.publish(IncorrectSubmissionEvent(it, question)) }
+      } ?: gameViewModel.game.value?.let { Events.publish(NoSubmissionEvent(it)) }
     }
 
-    scheduleHide(4750)
+    playAnimation(resultAnimation.lottieAsset)
+    scheduleHide(resultAnimation.durationMillis)
   }
 
   private fun startQuestionTimer(responseExpiry: Long, isPopularChoice: Boolean) {
@@ -223,6 +250,7 @@ internal class QuestionFragment : Fragment() {
     animationView.clearAnimation()
     animationView.setAnimation(animation)
     animationView.progress = initialProgress
+    animationView.visibility = View.VISIBLE
     animationView.resumeAnimation()
   }
 
@@ -234,16 +262,15 @@ internal class QuestionFragment : Fragment() {
     fun startProgress(secondsLeft: Float) = 1 - (secondsLeft / countdownSeconds)
   }
 
+  private class TimedAnimation(val lottieAsset: String, val durationMillis: Long)
+
   companion object {
-
-    private val DefaultTimer = CountdownAnimation(
-        "theqkit_timer_10s.json", 10f)
-    private val PopularChoiceTimer =
-      CountdownAnimation(
-          "theqkit_timer_13s.json", 13f)
-    private const val ANIM_CORRECT = "theqkit_correct.json"
-    private const val ANIM_INCORRECT = "theqkit_incorrect.json"
-
+    private val DefaultTimer = CountdownAnimation("theqkit_timer_10s.json", 10f)
+    private val PopularChoiceTimer = CountdownAnimation("theqkit_timer_13s.json", 13f)
+    private val DefaultCorrectAnimation = TimedAnimation("theqkit_correct.json", 5000)
+    private val DefaultIncorrectAnimation = TimedAnimation("theqkit_incorrect.json", 5000)
+    private val PopularChoiceCorrectAnimation = TimedAnimation("theqkit_correct-pc.json", 6000)
+    private val PopularChoiceIncorrectAnimation = TimedAnimation("theqkit_incorrect-pc.json", 6000)
   }
 
 }

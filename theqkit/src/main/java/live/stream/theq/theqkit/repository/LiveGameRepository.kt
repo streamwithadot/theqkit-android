@@ -17,7 +17,9 @@ import live.stream.theq.theqkit.data.sdk.QuestionStart
 import live.stream.theq.theqkit.data.sdk.Resource
 import live.stream.theq.theqkit.data.sdk.ViewCountUpdate
 import live.stream.theq.theqkit.events.ErrorSubmissionEvent
+import live.stream.theq.theqkit.events.Event
 import live.stream.theq.theqkit.events.Events
+import live.stream.theq.theqkit.events.GameWonEvent
 import live.stream.theq.theqkit.extensions.getOrThrow
 import live.stream.theq.theqkit.player.GameSSEHandler
 import live.stream.theq.theqkit.util.launchAsync
@@ -73,15 +75,15 @@ internal class LiveGame(
   private fun onEvent(event: Any) {
     when (event) {
       is GameStatus -> GameState(
-          event,
-          gameResponse).let { gameState ->
+        event,
+        gameResponse
+      ).let { gameState ->
         game.postValue(gameState)
         gameState.currentQuestion?.let { game.postValue(gameState.getAsQuestionStart()) }
       }
-      is GameWon -> {
-      } // not currently used
       is GameEnded -> game.value?.let { game.postValue(it.getUpdated(event)) }
       is GameWinners -> game.value?.let { game.postValue(it.getUpdated(event)) }
+      is GameWon -> Events.publish(GameWonEvent(event.amount))
       is QuestionStart -> game.value?.let {
         choiceJob?.cancel() // <-- just being paranoid. shouldn't need this...
         choiceSubmission.postValue(null)

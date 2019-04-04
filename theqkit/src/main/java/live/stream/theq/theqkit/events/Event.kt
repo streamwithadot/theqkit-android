@@ -3,50 +3,55 @@ package live.stream.theq.theqkit.events
 import live.stream.theq.theqkit.data.sdk.ChoiceState
 import live.stream.theq.theqkit.data.sdk.GameState
 import live.stream.theq.theqkit.data.sdk.QuestionResultState
+import java.math.BigDecimal
 import java.util.UUID
 
-sealed class Event
+sealed class Event(internal val sdkVisible: Boolean = false)
 
 data class UserBannedEvent internal constructor(
   val wasPreviouslyBanned: Boolean
-) : Event()
+) : Event(sdkVisible = true)
 
 data class ChoiceSelectedEvent internal constructor(
   val game: GameState,
   val choice: ChoiceState,
   val usedHeart: Boolean
-) : Event()
+) : Event(sdkVisible = true)
 
 data class CorrectSubmissionEvent internal constructor(
   val game: GameState,
   val question: QuestionResultState
-) : Event()
+) : Event(sdkVisible = true)
 
 data class ErrorSubmissionEvent internal constructor(
   val game: GameState,
   val choice: ChoiceState,
   val errorCode: String
-) : Event()
+) : Event(sdkVisible = true)
 
 data class IncorrectSubmissionEvent internal constructor(
   val game: GameState,
   val question: QuestionResultState
-) : Event()
+) : Event(sdkVisible = true)
 
 data class LagRestartEvent internal constructor(
   val gameId: UUID,
   val isFastConnection: Boolean
 ) : Event()
 
-data class ExitGameEvent constructor(
+data class GameWonEvent internal constructor(
+  val amount: BigDecimal
+) : Event(sdkVisible = true)
+
+data class ExitGameEvent internal constructor(
   val gameId: UUID
 ) : Event()
 
-data class HeartUsedEvent constructor(
+data class HeartUsedEvent internal constructor(
   val gameId: UUID
 ) : Event()
 
-data class HeartNotUsedEvent constructor(
+data class HeartNotUsedEvent internal constructor(
   val gameId: UUID
 ) : Event()
 

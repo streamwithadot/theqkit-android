@@ -194,6 +194,19 @@ class TheQKit {
     return prefsHelper.isUserAuthenticated()
   }
 
+  /**
+   * Get an Observable stream of [Event] objects.
+   *
+   * This allows partner implementations to react to various key events that may occur during
+   * at various points during, or surrounding, a live game.
+   */
+  @Keep
+  fun getEventStream(): Observable<Event> {
+    throwIfNotInitialized()
+    return Events.getEventStream(isPartnerImplementation = !config.partnerCode.isNullOrEmpty())
+  }
+
+
   private fun throwIfNotInitialized() {
     if (!initialized) {
       throw QKitInitializationException()
@@ -222,18 +235,6 @@ class TheQKit {
   fun getPrefsHelper(): PrefsHelper {
     throwIfNotInitialized()
     return prefsHelper
-  }
-
-  /**
-   * Internal only
-   *
-   * Do not keep. stripped out by r8
-   *
-   * @suppress
-   */
-  fun getEventStream(): Observable<Event> {
-    throwIfNotInitialized()
-    return Events.eventStream
   }
 
   companion object {

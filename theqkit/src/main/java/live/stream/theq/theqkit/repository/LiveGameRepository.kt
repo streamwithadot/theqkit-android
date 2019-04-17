@@ -17,14 +17,13 @@ import live.stream.theq.theqkit.data.sdk.QuestionStart
 import live.stream.theq.theqkit.data.sdk.Resource
 import live.stream.theq.theqkit.data.sdk.ViewCountUpdate
 import live.stream.theq.theqkit.events.ErrorSubmissionEvent
-import live.stream.theq.theqkit.events.Event
 import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.events.GameWonEvent
 import live.stream.theq.theqkit.extensions.getOrThrow
 import live.stream.theq.theqkit.player.GameSSEHandler
-import live.stream.theq.theqkit.util.launchAsync
 import live.stream.theq.theqkit.http.RestClient
 import live.stream.theq.theqkit.util.PrefsHelper
+import live.stream.theq.theqkit.internal.launchAsync
 import java.lang.Exception
 
 internal class LiveGameRepository internal constructor(
@@ -124,7 +123,8 @@ internal class LiveGame(
               if (result?.usedHeart == true) prefsHelper.subtractFullHeart()
               choiceSubmission.value = if (result?.success == true) {
                 Resource.success(
-                    ChoiceSubmissionState(choice, result))
+                    ChoiceSubmissionState(choice, result)
+                )
               } else {
                 trackSubmissionError(choice)
                 Resource.error(
@@ -134,8 +134,10 @@ internal class LiveGame(
               }
             }
       } catch (err: Exception) {
-        trackSubmissionError(choice,
-            (err as? ApiException)?.errorCode)
+        trackSubmissionError(
+            choice,
+            (err as? ApiException)?.errorCode
+        )
         choiceSubmission.value = Resource.error(
             err,
             ChoiceSubmissionState(choice, null)

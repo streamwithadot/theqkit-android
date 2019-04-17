@@ -11,6 +11,7 @@ import org.koin.standalone.inject
 import java.io.UnsupportedEncodingException
 import java.util.UUID
 
+/** @suppress **/
 object DeviceUtil : KoinComponent {
 
   private val prefsHelper: PrefsHelper by inject()

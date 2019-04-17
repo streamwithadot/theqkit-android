@@ -6,6 +6,7 @@ import live.stream.theq.theqkit.data.sdk.User
 import java.math.BigDecimal
 import java.util.UUID
 
+/** @suppress **/
 class PrefsHelper internal constructor(context: Context, customSharedPreferences: SharedPreferences? = null) {
 
   private val sharedPreferences =

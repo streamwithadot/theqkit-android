@@ -19,6 +19,7 @@ import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.repository.LiveGame
 import live.stream.theq.theqkit.repository.LiveGameRepository
 
+/** @suppress **/
 class GameViewModel internal constructor(private val liveGameRepository: LiveGameRepository) : ViewModel() {
 
   private var liveGame: LiveGame? = null

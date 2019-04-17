@@ -3,20 +3,20 @@ package live.stream.theq.theqkit.data.sdk
 import java.math.BigDecimal
 import java.util.UUID
 
-data class GameStatus(
+internal data class GameStatus(
   val id: Long,
   val active: Boolean,
   val heartEligible: Boolean,
   val question: QuestionPayload?
 )
 
-data class GameWon(
+internal data class GameWon(
   val id: Long,
   val userId: UUID,
   val amount: BigDecimal
 )
 
-data class QuestionPayload(
+internal data class QuestionPayload(
   val id: UUID,
   val questionType: String,
   val categoryId: UUID?,
@@ -27,30 +27,30 @@ data class QuestionPayload(
   val total: Int
 )
 
-//data class GameWarn(
+//internal data class GameWarn(
 //  val id: Long,
 //  val gameId: UUID,
 //  val duration: Long
 //)
 
-data class GameEnded(
+internal data class GameEnded(
   val id: Long,
   val gameId: UUID
 )
 
-data class GameWinners(
+internal data class GameWinners(
   val id: Long,
   val gameId: UUID,
   val winnerCount: Int,
   val winners: List<GameWinner>
 )
 
-data class GameWinner(
+internal data class GameWinner(
   val user: String,
   val pic: String?
 )
 
-data class QuestionStart(
+internal data class QuestionStart(
   val id: Long,
   val questionType: String,
   val gameId: UUID,
@@ -63,14 +63,14 @@ data class QuestionStart(
   val total: Int
 )
 
-data class QuestionEnd(
+internal data class QuestionEnd(
   val id: Long,
   val gameId: UUID,
   val questionId: UUID,
   val selection: String?
 )
 
-data class QuestionResult(
+internal data class QuestionResult(
   val id: Long,
   val questionType: String,
   val gameId: UUID,
@@ -94,13 +94,14 @@ data class QuestionResult(
   }
 }
 
-data class ViewCountUpdate(
+internal data class ViewCountUpdate(
   val id: Long,
   val gameId: UUID,
   val viewCnt: Int,
   val uniqueCnt: Int
 )
 
+/** @suppress **/
 class Question {
   companion object {
     const val TYPE_TRIVIA = "TRIVIA"

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.util.UUID
 
-
+/** @suppress **/
 data class GameListResponse(val games: List<GameResponse>)
 
 @Parcelize data class GameResponse(
@@ -26,6 +26,7 @@ data class GameListResponse(val games: List<GameResponse>)
     val adCode: String?,
     val gameType: String) : Parcelable
 
+/** @suppress **/
 @Parcelize data class Theme(
     val id: UUID,
     val displayName: String,
@@ -36,8 +37,10 @@ data class GameListResponse(val games: List<GameResponse>)
     val altTextColorCode: String,
     val defaultColorCode: String) : Parcelable
 
+/** @suppress **/
 data class Choice(val id: String, val questionId: UUID, val choice: String)
 
+/** @suppress **/
 data class ResponseResult(
     val questionId: UUID,
     val correct: Boolean,

@@ -59,6 +59,7 @@ internal class WinnersRecyclerAdapter(
 
 }
 
+/** @suppress **/
 interface GameWinnerProfilePhotoLoader {
   fun load(
     context: Context,

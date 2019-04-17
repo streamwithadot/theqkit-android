@@ -84,6 +84,25 @@ dokka {
     prefix = "live.stream.theq.theqkit.data.app"
     suppress = true
   }
+  packageOptions {
+    prefix = "live.stream.theq.theqkit.extensions"
+    suppress = true
+  }
+  packageOptions {
+    // note: some Kotlin features (like type aliases and top-level functions) produce an auto-
+    // generated class that cannot be @suppress'd. the `internal` package is primarily used
+    // as a bucket that we can @suppress wholesale.
+    prefix = "live.stream.theq.theqkit.internal"
+    suppress = true
+  }
+  packageOptions {
+    prefix = "live.stream.theq.theqkit.player"
+    suppress = true
+  }
+  packageOptions {
+    prefix = "live.stream.theq.theqkit.ui.game"
+    suppress = true
+  }
 }
 
 task javadocJar(type: Jar, dependsOn: dokka) {

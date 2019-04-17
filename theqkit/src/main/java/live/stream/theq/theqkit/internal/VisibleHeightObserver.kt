@@ -1,4 +1,4 @@
-package live.stream.theq.theqkit.util
+package live.stream.theq.theqkit.internal
 
 import android.graphics.Rect
 import android.util.Log
@@ -13,6 +13,7 @@ import androidx.lifecycle.OnLifecycleEvent
 internal typealias VisibleHeightUpdateHandler = (visibleHeight: Int, isOpen: Boolean) -> Unit
 internal typealias KeyboardStateUpdateHandler = (isOpen: Boolean) -> Unit
 
+/** @suppress **/
 internal class VisibleHeightObserver private constructor(private val handlerState: HandlerState) {
 
   private var prevVisibleHeight: Int? = null
@@ -92,29 +93,41 @@ internal class VisibleHeightObserver private constructor(private val handlerStat
 
     fun observe(activity: FragmentActivity, handler: VisibleHeightUpdateHandler) {
       VisibleHeightObserver(
-          VisibleHeightHandlerState(activity,
-              activity, handler))
+          VisibleHeightHandlerState(
+              activity,
+              activity, handler
+          )
+      )
     }
 
     fun observe(fragment: Fragment, handler: VisibleHeightUpdateHandler) {
       fragment.activity?.let {
         VisibleHeightObserver(
-            VisibleHeightHandlerState(it,
-                fragment, handler))
+            VisibleHeightHandlerState(
+                it,
+                fragment, handler
+            )
+        )
       } ?: Log.w(TAG, "Unable to register Fragment observer with null Activity")
     }
 
     fun observeKeyboardState(activity: FragmentActivity, handler: KeyboardStateUpdateHandler) {
       VisibleHeightObserver(
-          KeyboardStateHandlerState(activity,
-              activity, handler))
+          KeyboardStateHandlerState(
+              activity,
+              activity, handler
+          )
+      )
     }
 
     fun observeKeyboardState(fragment: Fragment, handler: KeyboardStateUpdateHandler) {
       fragment.activity?.let {
         VisibleHeightObserver(
-            KeyboardStateHandlerState(it,
-                fragment, handler))
+            KeyboardStateHandlerState(
+                it,
+                fragment, handler
+            )
+        )
       } ?: Log.w(TAG, "Unable to register Fragment observer with null Activity")
     }
   }

@@ -8,6 +8,7 @@ import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.STATUS
 import java.util.UUID
 
+/** @suppress **/
 data class GameState(
   val id: Long,
   val isUserActive: Boolean,
@@ -25,7 +26,7 @@ data class GameState(
   val lastEvent: GameEvent
 ) {
 
-  constructor(gameStatus: GameStatus, game: GameResponse) : this(
+  internal constructor(gameStatus: GameStatus, game: GameResponse) : this(
       id = gameStatus.id,
       isUserActive = gameStatus.active,
       currentQuestion = gameStatus.question?.let(::QuestionStartState),
@@ -41,9 +42,9 @@ data class GameState(
 
   // note: special case for handling a question payload on the GameStatus event.
   // we use this to rapidly fire off the QuestionStart event in this case.
-  fun getAsQuestionStart() = this.copy(lastEvent = QUESTION_STARTED)
+  internal fun getAsQuestionStart() = this.copy(lastEvent = QUESTION_STARTED)
 
-  fun getUpdated(questionStart: QuestionStart) = this.copy(
+  internal fun getUpdated(questionStart: QuestionStart) = this.copy(
       currentQuestion = QuestionStartState(questionStart),
       currentQuestionNumber = questionStart.number,
       totalQuestionsCount = questionStart.total.takeIf { it > 0 },
@@ -52,7 +53,7 @@ data class GameState(
       lastEvent = QUESTION_STARTED
   )
 
-  fun getUpdated(questionEnd: QuestionEnd) = this.copy(
+  internal fun getUpdated(questionEnd: QuestionEnd) = this.copy(
       currentQuestion = this.currentQuestion
           ?.takeIf { it.id == questionEnd.questionId }
           ?.let { it as QuestionStartState? }
@@ -60,7 +61,7 @@ data class GameState(
       lastEvent = QUESTION_ENDED
   )
 
-  fun getUpdated(questionResult: QuestionResult) = this.copy(
+  internal fun getUpdated(questionResult: QuestionResult) = this.copy(
       currentQuestion = QuestionResultState(
           questionResult,
           this.currentQuestion?.takeIf { it.id == questionResult.questionId },
@@ -70,13 +71,13 @@ data class GameState(
       lastEvent = QUESTION_RESULT
   )
 
-  fun getUpdated(gameWinners: GameWinners) = this.copy(
+  internal fun getUpdated(gameWinners: GameWinners) = this.copy(
       currentQuestion = null,
       winners = GameWinnersState(gameWinners),
       lastEvent = GAME_WINNERS
   )
 
-  fun getUpdated(gameEnded: GameEnded) = this.copy(
+  internal fun getUpdated(gameEnded: GameEnded) = this.copy(
       currentQuestion = null,
       isEnded = true,
       lastEvent = GAME_ENDED
@@ -95,6 +96,7 @@ data class GameState(
 
 }
 
+/** @suppress **/
 interface QuestionState {
   val id: UUID
   val categoryId: UUID?
@@ -110,7 +112,7 @@ interface QuestionState {
     get() = questionType == Question.TYPE_TRIVIA
 }
 
-data class QuestionStartState(
+internal data class QuestionStartState(
   override val id: UUID,
   override val categoryId: UUID?,
   override val questionNumber: Int,
@@ -142,7 +144,7 @@ data class QuestionStartState(
 
 }
 
-data class QuestionEndState(
+internal data class QuestionEndState(
   override val id: UUID,
   override val categoryId: UUID?,
   override val questionNumber: Int,
@@ -164,6 +166,7 @@ data class QuestionEndState(
 
 }
 
+/** @suppress **/
 data class QuestionResultState(
   override val id: UUID,
   override val categoryId: UUID?,
@@ -183,7 +186,7 @@ data class QuestionResultState(
   val userWasEliminatedOnQuestion: Boolean
 ) : QuestionState {
 
-  constructor(
+  internal constructor(
     questionResult: QuestionResult,
     questionState: QuestionState?,
     userPreviouslyActive: Boolean
@@ -218,19 +221,21 @@ data class QuestionResultState(
   }
 }
 
+/** @suppress **/
 interface ChoiceState {
   val id: String?
   val questionId: UUID
   val choiceText: String?
 }
 
+/** @suppress **/
 data class InitialChoiceState(
   override val id: String,
   override val questionId: UUID,
   override val choiceText: String
 ) : ChoiceState {
 
-  constructor(choice: Choice) : this(
+  internal constructor(choice: Choice) : this(
       id = choice.id,
       questionId = choice.questionId,
       choiceText = choice.choice
@@ -238,6 +243,7 @@ data class InitialChoiceState(
 
 }
 
+/** @suppress **/
 data class ChoiceResultState(
   override val id: String?,
   override val questionId: UUID,
@@ -248,7 +254,7 @@ data class ChoiceResultState(
   val userResponseRatio: Double
 ) : ChoiceState {
 
-  constructor(response: ResponseResult, totalResponseCount: Int) : this(
+  internal constructor(response: ResponseResult, totalResponseCount: Int) : this(
       id = response.response,
       questionId = response.questionId,
       choiceText = response.choice,
@@ -260,21 +266,27 @@ data class ChoiceResultState(
 
 }
 
-data class FreeResponseChoiceState(
+internal data class FreeResponseChoiceState(
   override val id: String,
   override val questionId: UUID,
   override val choiceText: String? = null
 ) : ChoiceState
 
-data class ChoiceSubmissionState(val choice: ChoiceState, val response: SubmitAnswerResponse?)
+/** @suppress **/
+data class ChoiceSubmissionState(
+  val choice: ChoiceState,
+  val response: SubmitAnswerResponse?
+)
 
+/** @suppress **/
 data class GameWinnersState(val count: Int, val profiles: List<GameWinnerState>) {
-  constructor(gameWinners: GameWinners) : this(
+  internal constructor(gameWinners: GameWinners) : this(
       count = gameWinners.winnerCount,
       profiles = gameWinners.winners.map(::GameWinnerState)
   )
 }
 
+/** @suppress **/
 data class GameWinnerState(val username: String, val pic: String?) {
-  constructor(gameWinner: GameWinner) : this(gameWinner.user, gameWinner.pic)
+  internal constructor(gameWinner: GameWinner) : this(gameWinner.user, gameWinner.pic)
 }

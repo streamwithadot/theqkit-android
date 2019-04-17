@@ -28,7 +28,7 @@ import live.stream.theq.theqkit.events.CorrectSubmissionEvent
 import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.events.IncorrectSubmissionEvent
 import live.stream.theq.theqkit.events.NoSubmissionEvent
-import live.stream.theq.theqkit.util.VisibleHeightObserver
+import live.stream.theq.theqkit.internal.VisibleHeightObserver
 import live.stream.theq.theqkit.util.Calculations
 import live.stream.theq.theqkit.util.NavigationUtil
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel

@@ -4,6 +4,7 @@ import live.stream.theq.theqkit.data.sdk.Resource.Companion.Status.ERROR
 import live.stream.theq.theqkit.data.sdk.Resource.Companion.Status.LOADING
 import live.stream.theq.theqkit.data.sdk.Resource.Companion.Status.SUCCESS
 
+/** @suppress **/
 data class Resource<out T> internal constructor(
     val status: Status,
     val data: T?,

@@ -1,4 +1,4 @@
-package live.stream.theq.theqkit.util
+package live.stream.theq.theqkit.internal
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

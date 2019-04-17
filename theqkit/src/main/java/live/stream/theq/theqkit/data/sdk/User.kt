@@ -2,6 +2,7 @@ package live.stream.theq.theqkit.data.sdk
 
 import java.math.BigDecimal
 
+/** @suppress **/
 data class User(
     val id: String,
     val username: String,
@@ -16,6 +17,7 @@ data class User(
     val activeSubscription: Boolean?
 )
 
+/** @suppress **/
 data class UserResponse(val user: User)
 
 

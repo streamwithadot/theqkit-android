@@ -34,6 +34,7 @@ data class IncorrectSubmissionEvent internal constructor(
   val question: QuestionResultState
 ) : Event(sdkVisible = true)
 
+/** @suppress **/
 data class LagRestartEvent internal constructor(
   val gameId: UUID,
   val isFastConnection: Boolean
@@ -43,16 +44,20 @@ data class GameWonEvent internal constructor(
   val amount: BigDecimal
 ) : Event(sdkVisible = true)
 
+/** @suppress **/
 data class ExitGameEvent internal constructor(
   val gameId: UUID
 ) : Event()
 
+/** @suppress **/
 data class HeartUsedEvent internal constructor(
   val gameId: UUID
 ) : Event()
 
+/** @suppress **/
 data class HeartNotUsedEvent internal constructor(
   val gameId: UUID
 ) : Event()
 
+/** @suppress **/
 data class NoSubmissionEvent internal constructor(val game: GameState) : Event()

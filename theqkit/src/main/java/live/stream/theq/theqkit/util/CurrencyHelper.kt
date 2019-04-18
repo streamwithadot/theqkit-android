@@ -5,6 +5,9 @@ import androidx.annotation.Keep
 import live.stream.theq.theqkit.R
 import java.text.DecimalFormat
 
+/**
+ * Provides helper methods for formatting numeric values as currency.
+ */
 @Keep
 object CurrencyHelper {
 

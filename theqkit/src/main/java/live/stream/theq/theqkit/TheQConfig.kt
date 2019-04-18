@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 import live.stream.theq.theqkit.exception.QKitInitializationException
 
 /**
- * Configuration for [TheQKit]
+ * A configuration object for initializing [TheQKit](TheQKit).
  *
  * Use [TheQConfig.Builder] to create your configuration.
  * Pass [TheQConfig] to [TheQKit.init] once created.

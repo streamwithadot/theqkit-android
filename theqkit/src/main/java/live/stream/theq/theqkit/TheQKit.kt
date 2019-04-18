@@ -25,6 +25,13 @@ import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
 import org.koin.standalone.StandAloneContext.loadKoinModules
 
+/**
+ * A top-level object for interacting with TheQKit.
+ *
+ * Important:
+ * * To retrieve a singleton instance, use `TheQKit.getInstance()`.
+ * * Prior to invoking other methods, TheQKit must be initialized via [TheQKit.init].
+ */
 class TheQKit {
   private var initialized = false
   internal lateinit var config: TheQConfig
@@ -33,6 +40,15 @@ class TheQKit {
   private lateinit var gameRepository: GameRepository
   internal lateinit var userRepository: UserRepository
 
+  /**
+   * Initializes the singleton instance of TheQKit.
+   *
+   * Please note that:
+   * * This needs to be called before invoking other methods.
+   * * Calling this method multiple times will result in an exception being thrown.
+   *
+   * Please see [TheQConfig](TheQConfig) for initialization options.
+   */
   @Keep
   fun init(config: TheQConfig) {
     if (initialized) {

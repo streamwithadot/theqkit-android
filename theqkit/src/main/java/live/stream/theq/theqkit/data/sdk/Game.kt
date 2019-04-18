@@ -7,6 +7,9 @@ import java.util.UUID
 /** @suppress **/
 data class GameListResponse(val games: List<GameResponse>)
 
+/**
+ * An object describing a scheduled game (including whether or not the game is currently live).
+ */
 @Parcelize data class GameResponse(
     val id: UUID,
     val streamUrl: String,

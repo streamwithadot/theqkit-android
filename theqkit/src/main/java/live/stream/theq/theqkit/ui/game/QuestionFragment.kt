@@ -32,6 +32,7 @@ import live.stream.theq.theqkit.internal.VisibleHeightObserver
 import live.stream.theq.theqkit.util.Calculations
 import live.stream.theq.theqkit.util.NavigationUtil
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.lang.IllegalArgumentException
 
 @Keep
 internal class QuestionFragment : Fragment() {
@@ -187,7 +188,12 @@ internal class QuestionFragment : Fragment() {
 
     if (secondsLeft < 1f) return
 
-    val timer = if (isPopularChoice) PopularChoiceTimer else DefaultTimer
+    val timer = getCountdownAnimation(resources.getInteger(
+        if (isPopularChoice)
+          R.integer.theqkit_response_time_pop_choice
+        else
+          R.integer.theqkit_response_time_trivia
+    ).toFloat())
 
     playAnimation(timer.lottieAsset, Math.max(Math.min(timer.startProgress(secondsLeft), 1f), 0f))
 
@@ -263,6 +269,13 @@ internal class QuestionFragment : Fragment() {
   }
 
   private class TimedAnimation(val lottieAsset: String, val durationMillis: Long)
+
+  private fun getCountdownAnimation(countdownSeconds: Float) = when(countdownSeconds) {
+    10f -> CountdownAnimation("theqkit_timer_10s.json", 10f)
+    13f -> CountdownAnimation("theqkit_timer_13s.json", 13f)
+    15f -> CountdownAnimation("theqkit_timer_15s.json", 15f)
+    else -> throw IllegalArgumentException("No timer animations found for duration $countdownSeconds")
+  }
 
   companion object {
     private val DefaultTimer = CountdownAnimation("theqkit_timer_10s.json", 10f)

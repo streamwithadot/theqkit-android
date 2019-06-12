@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <integer name="theqkit_cashout_minimum">25</integer>
+  <integer name="theqkit_response_time_trivia">10</integer>
+  <integer name="theqkit_response_time_pop_choice">13</integer>
 </resources>

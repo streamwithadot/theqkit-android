@@ -253,7 +253,7 @@ class TheQKit {
     return prefsHelper
   }
 
-  companion object {
+  @Keep companion object {
 
     internal const val TAG = "TheQKit"
 

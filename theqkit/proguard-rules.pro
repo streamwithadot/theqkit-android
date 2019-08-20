@@ -20,3 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep class live.stream.theq.theqkit.data.sdk.**{ *; }
+
+-keepclassmembers class live.stream.theq.theqkit.TheQKit {
+    public static ** Companion;
+}

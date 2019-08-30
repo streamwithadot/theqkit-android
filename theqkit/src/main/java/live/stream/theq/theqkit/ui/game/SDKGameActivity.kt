@@ -7,14 +7,14 @@ import android.net.Uri
 import android.os.*
 import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.theqkit_activity_game.*
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.GAME_ENDED

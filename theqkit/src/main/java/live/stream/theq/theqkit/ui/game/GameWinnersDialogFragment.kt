@@ -49,7 +49,7 @@ internal class GameWinnersDialogFragment : DialogFragment() {
 
   override fun onStart() {
     super.onStart()
-    dialog.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
+    dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
   }
 
   companion object {

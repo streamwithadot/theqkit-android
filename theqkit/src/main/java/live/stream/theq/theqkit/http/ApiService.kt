@@ -91,11 +91,15 @@ interface ApiService {
   @POST("users")
   fun signup(
     @Query("referralCode") referralCode: String?,
+    @Query("partnerCode") partnerCode: String? = null,
     @Body authData: SignupAuthData
   ): Observable<Result<AuthResponse>>
 
   @POST("oauth/token")
-  fun login(@Body authData: LoginAuthData): Observable<Result<AuthResponse>>
+  fun login(
+    @Body authData: LoginAuthData,
+    @Query("partnerCode") partnerCode: String? = null
+  ): Observable<Result<AuthResponse>>
 
   @DELETE("oauth/token")
   fun logout(): Observable<Result<SuccessResponse>>

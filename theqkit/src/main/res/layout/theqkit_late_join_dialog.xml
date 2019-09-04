@@ -35,7 +35,7 @@
         android:textColor="@color/theqkit_white"
         android:backgroundTint="@color/theqkit_color_accent"
         android:padding="10dp"
-        android:text="@string/theqkit_earn_points" />
+        android:text="@string/theqkit_late_join_dismiss" />
 
 
 </RelativeLayout>

@@ -35,9 +35,9 @@
   <string name="theqkit_leave_game_message">Are you sure you want to leave the game? You will be eliminated if the game is still in progress.</string>
   <string name="theqkit_continue_playing">Continue Playing</string>
   <string name="theqkit_eliminated">Eliminated</string>
-  <string name="theqkit_earn_points">EARN POINTS</string>
-  <string name="theqkit_late_join_description">You\'re no longer eligible to win today\'s game, but you can still answer questions to earn points on the leaderboard!</string>
   <string name="theqkit_late_join_title">You\'ve joined the game late.</string>
+  <string name="theqkit_late_join_description">You\'re no longer eligible to win today\'s game, but you can still answer questions to earn points on the leaderboard!</string>
+  <string name="theqkit_late_join_dismiss">EARN POINTS</string>
 
   <plurals name="theqkit_n_winners">
     <item quantity="one">%1$d Winner!</item>

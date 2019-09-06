@@ -154,9 +154,7 @@ internal class LoginViewModel(
   }
 
   private fun handleSuccessfulLogin(authResponse: AuthResponse) {
-    prefsHelper.bearerToken = authResponse.oauth.accessToken
-    prefsHelper.referralCode = authResponse.oauth.refreshToken
-    prefsHelper.saveUser(authResponse.user)
+    prefsHelper.saveUser(authResponse)
     listener?.onSuccess()
     _loginStateLiveData.value = _loginStateLiveData.value?.copy(isCompleted = true)
   }

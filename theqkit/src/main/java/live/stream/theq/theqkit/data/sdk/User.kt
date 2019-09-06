@@ -14,7 +14,6 @@ data class User(
     val referralCode: String,
     val heartPieceCount: Int,
     val admin: Boolean?,
-    val tester: Boolean?,
     val activeSubscription: Boolean?
 )
 

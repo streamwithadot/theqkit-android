@@ -39,7 +39,7 @@ data class SignupAuthData(
   val device: Device? = null)
 
 /** @suppress **/
-data class AuthResponse(val user: User, val oauth: OauthResponse)
+data class AuthResponse(val user: User, val oauth: OauthResponse, val tester: Boolean?)
 
 /** @suppress **/
 data class OauthResponse(val accessToken: String, val refreshToken: String)

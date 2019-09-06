@@ -2,6 +2,7 @@ package live.stream.theq.theqkit.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import live.stream.theq.theqkit.data.sdk.AuthResponse
 import live.stream.theq.theqkit.data.sdk.User
 import java.math.BigDecimal
 import java.util.UUID
@@ -203,7 +204,13 @@ class PrefsHelper internal constructor(context: Context, customSharedPreferences
     heartPieceCount = Math.max(0, heartPieceCount - 4)
   }
 
-  fun saveUser(user: User) {
+  fun saveUser(authResponse: AuthResponse) {
+    saveOauth(authResponse.oauth.accessToken, authResponse.oauth.refreshToken)
+    saveUser(authResponse.user)
+    tester = authResponse.tester ?: false
+  }
+
+  private fun saveUser(user: User) {
     editor.putString(USER_ID, user.id)
     editor.putString(USERNAME, user.username)
     editor.putString(PROFILE_PIC_URL, user.profilePicUrl)
@@ -215,13 +222,12 @@ class PrefsHelper internal constructor(context: Context, customSharedPreferences
     editor.putString(REFERRAL_CODE, user.referralCode)
     editor.putInt(HEART_PIECE_COUNT, user.heartPieceCount)
     editor.putBoolean(ADMIN, user.admin ?: false)
-    editor.putBoolean(TESTER, user.tester ?: false)
     editor.putBoolean(ONE_TIME_REGISTRATION, false)
     editor.putBoolean(ACTIVE_SUBSCRIPTION, user.activeSubscription ?: false)
     editor.commit()
   }
 
-  fun saveOauth(bearerToken: String, refreshToken: String) {
+  private fun saveOauth(bearerToken: String, refreshToken: String) {
     editor.putString(BEARER_TOKEN, bearerToken)
     editor.putString(REFRESH_TOKEN, refreshToken)
     editor.commit()

@@ -152,6 +152,13 @@ class PrefsHelper internal constructor(context: Context, customSharedPreferences
       editor.commit()
     }
 
+  var tester: Boolean
+    get() = sharedPreferences.getBoolean(TESTER, false)
+    set(tester) {
+      editor.putBoolean(TESTER, tester)
+      editor.commit()
+    }
+
   var mostRecentNotificationRead: Long
     get() = sharedPreferences.getLong(
         NOTIFICATIONS_LAST_CHECKED, 0)
@@ -208,6 +215,7 @@ class PrefsHelper internal constructor(context: Context, customSharedPreferences
     editor.putString(REFERRAL_CODE, user.referralCode)
     editor.putInt(HEART_PIECE_COUNT, user.heartPieceCount)
     editor.putBoolean(ADMIN, user.admin ?: false)
+    editor.putBoolean(TESTER, user.tester ?: false)
     editor.putBoolean(ONE_TIME_REGISTRATION, false)
     editor.putBoolean(ACTIVE_SUBSCRIPTION, user.activeSubscription ?: false)
     editor.commit()
@@ -242,6 +250,7 @@ class PrefsHelper internal constructor(context: Context, customSharedPreferences
     private const val LAST_GAME = "lastGame"
     private const val FIRST_LEADERBOARD = "firstLeaderboard"
     private const val ADMIN = "admin"
+    private const val TESTER = "tester"
     private const val USER_BAN = "userBanned"
     private const val NOTIFICATIONS_LAST_CHECKED = "notificationsLastChecked"
     private const val ONE_TIME_REGISTRATION = "oneTimeRegistration"

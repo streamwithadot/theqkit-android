@@ -6,6 +6,7 @@ import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
 import live.stream.theq.theqkit.data.sdk.AccountKitLogin
+import live.stream.theq.theqkit.data.sdk.ApiError
 import live.stream.theq.theqkit.data.sdk.FirebaseLogin
 import live.stream.theq.theqkit.data.sdk.GameResponse
 import live.stream.theq.theqkit.di.repositoryModule
@@ -166,6 +167,21 @@ class TheQKit {
   fun fetchGames(listener: GameResponseListener) {
     throwIfNotInitialized()
     gameRepository.fetchGames(listener)
+  }
+
+  /**
+   *  Fetch list of test games
+   *
+   *  @param listener to handle response.
+   */
+  @Keep
+  fun fetchTestGames(listener: GameResponseListener) {
+    throwIfNotInitialized()
+    if(!prefsHelper.tester) {
+      listener.onFailure(ApiError("USER_NOT_TESTER", "User does not have tester permissions."))
+      return
+    }
+    gameRepository.fetchTestGames(listener)
   }
 
   /**

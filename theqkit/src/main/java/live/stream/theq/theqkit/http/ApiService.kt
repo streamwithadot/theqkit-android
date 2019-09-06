@@ -42,6 +42,12 @@ interface ApiService {
     @Query("userId") userId: String? = null,
     @Query("partnerCode") partnerCode: String? = null): Deferred<Response<GameListResponse>>
 
+  @GET("test-games?&gameTypes=TRIVIA,POPULAR")
+  fun scheduledTestGamesAsync(
+    @Query("partnerCode") partnerCode: String? = null,
+    @Query("offset") offset: Int = 0,
+    @Query("limit") limit: Int = 25): Deferred<Response<GameListResponse>>
+
   @POST("oauth/token")
   fun partnerLoginAsync(
     @Query("partnerCode") partnerCode: String,

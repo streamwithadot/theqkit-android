@@ -26,6 +26,9 @@ internal class GameRepository(
   private val requestInProgress = AtomicBoolean()
   private var lastSuccessfulResponse: LastSuccessfulResponse? = null
 
+  private val testRequestInProgress = AtomicBoolean()
+  private var testLastSuccessfulResponse: LastSuccessfulResponse? = null
+
   internal fun fetchGames(listener: GameResponseListener) {
     if (requestInProgress.get()) {
       launch {
@@ -66,6 +69,47 @@ internal class GameRepository(
         listener.onFailure(ApiError())
       }
       requestInProgress.set(false)
+    }
+  }
+
+  internal fun fetchTestGames(listener: GameResponseListener) {
+    if (testRequestInProgress.get()) {
+      launch {
+        listener.onFailure(
+          ApiError("REQUEST_IN_PROGRESS",
+            "There is already an existing request in progress."))
+      }
+      return
+    }
+
+    testRequestInProgress.set(true)
+
+    launch {
+      val cachedResponse = testLastSuccessfulResponse
+      if (cachedResponse != null && cachedResponse.requestedTime > System.currentTimeMillis() - MAX_CACHE_LIMIT_MILLISECONDS) {
+        listener.onSuccess(cachedResponse.games)
+        testRequestInProgress.set(false)
+        return@launch
+      }
+
+      testLastSuccessfulResponse = null
+      val requestTimestamp = System.currentTimeMillis()
+      try {
+        val gameListResponse =
+          apiService.scheduledTestGamesAsync(partnerCode = config.partnerCode).await()
+        if (gameListResponse.isSuccessful) {
+          val games = gameListResponse.body()?.games ?: emptyList()
+          testLastSuccessfulResponse =
+            LastSuccessfulResponse(
+              requestTimestamp, games)
+          listener.onSuccess(games)
+        } else {
+          listener.onFailure(ApiError())
+        }
+      } catch (e: Exception) {
+        listener.onFailure(ApiError())
+      }
+      testRequestInProgress.set(false)
     }
   }
 

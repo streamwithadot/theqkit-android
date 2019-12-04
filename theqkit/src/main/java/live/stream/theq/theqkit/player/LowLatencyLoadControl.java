@@ -31,6 +31,27 @@ import com.google.android.exoplayer2.util.Util;
  */
 public class LowLatencyLoadControl implements LoadControl {
 
+  public static final int DEFAULT_BUFFER_SEGMENT_SIZE = 64 * 1024;
+
+  /** A default size in bytes for a video buffer. */
+  public static final int DEFAULT_VIDEO_BUFFER_SIZE = 200 * DEFAULT_BUFFER_SEGMENT_SIZE;
+
+  /** A default size in bytes for an audio buffer. */
+  public static final int DEFAULT_AUDIO_BUFFER_SIZE = 54 * DEFAULT_BUFFER_SEGMENT_SIZE;
+
+  /** A default size in bytes for a text buffer. */
+  public static final int DEFAULT_TEXT_BUFFER_SIZE = 2 * DEFAULT_BUFFER_SEGMENT_SIZE;
+
+  /** A default size in bytes for a metadata buffer. */
+  public static final int DEFAULT_METADATA_BUFFER_SIZE = 2 * DEFAULT_BUFFER_SEGMENT_SIZE;
+
+  /** A default size in bytes for a camera motion buffer. */
+  public static final int DEFAULT_CAMERA_MOTION_BUFFER_SIZE = 2 * DEFAULT_BUFFER_SEGMENT_SIZE;
+
+  /** A default size in bytes for a muxed buffer (e.g. containing video, audio and text). */
+  public static final int DEFAULT_MUXED_BUFFER_SIZE =
+          DEFAULT_VIDEO_BUFFER_SIZE + DEFAULT_AUDIO_BUFFER_SIZE + DEFAULT_TEXT_BUFFER_SIZE;
+
   /**
    * The default minimum duration of media that the player will attempt to ensure is buffered at all
    * times, in milliseconds.
@@ -425,7 +446,7 @@ public class LowLatencyLoadControl implements LoadControl {
     int targetBufferSize = 0;
     for (int i = 0; i < renderers.length; i++) {
       if (trackSelectionArray.get(i) != null) {
-        targetBufferSize += Util.getDefaultBufferSize(renderers[i].getTrackType());
+        targetBufferSize += getDefaultBufferSize(renderers[i].getTrackType());
       }
     }
     return targetBufferSize;
@@ -444,5 +465,26 @@ public class LowLatencyLoadControl implements LoadControl {
 
   private static void assertGreaterOrEqual(int value1, int value2, String name1, String name2) {
     Assertions.checkArgument(value1 >= value2, name1 + " cannot be less than " + name2);
+  }
+
+  private static int getDefaultBufferSize(int trackType) {
+    switch (trackType) {
+      case C.TRACK_TYPE_DEFAULT:
+        return DEFAULT_MUXED_BUFFER_SIZE;
+      case C.TRACK_TYPE_AUDIO:
+        return DEFAULT_AUDIO_BUFFER_SIZE;
+      case C.TRACK_TYPE_VIDEO:
+        return DEFAULT_VIDEO_BUFFER_SIZE;
+      case C.TRACK_TYPE_TEXT:
+        return DEFAULT_TEXT_BUFFER_SIZE;
+      case C.TRACK_TYPE_METADATA:
+        return DEFAULT_METADATA_BUFFER_SIZE;
+      case C.TRACK_TYPE_CAMERA_MOTION:
+        return DEFAULT_CAMERA_MOTION_BUFFER_SIZE;
+      case C.TRACK_TYPE_NONE:
+        return 0;
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }

@@ -43,7 +43,7 @@ import java.util.UUID
 internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListener {
 
   private var gameId: UUID? = null
-  private var rtmpUri: Uri? = null
+  private var streamUri: Uri? = null
 
   private var playbackStarted = false
   private var lagDelay = 0L
@@ -103,13 +103,13 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
   }
 
   fun configure(rtmpUri: Uri, gameId: UUID) {
-    this.rtmpUri = rtmpUri
+    this.streamUri = rtmpUri
     this.gameId = gameId
     play()
   }
 
   private fun play() {
-    rtmpUri?.let {
+    streamUri?.let {
       Log.d(TAG, "play()")
       scheduledRestartTime = null
       playbackStarted = false
@@ -123,7 +123,7 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
               context,
               Util.getUserAgent(context, "TheQKit Live Player")
           )
-      ).createMediaSource(rtmpUri)
+      ).createMediaSource(streamUri)
 
       mediaSource.addEventListener(mainHandler, this)
 

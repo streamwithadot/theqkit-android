@@ -10,19 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.PlaybackParameters
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.EventListener
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.offline.FilteringManifestParser
 import com.google.android.exoplayer2.source.MediaSource.MediaPeriodId
 import com.google.android.exoplayer2.source.MediaSourceEventListener
 import com.google.android.exoplayer2.source.MediaSourceEventListener.LoadEventInfo
 import com.google.android.exoplayer2.source.MediaSourceEventListener.MediaLoadData
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
+import com.google.android.exoplayer2.source.dash.DashLLMediaSource
+import com.google.android.exoplayer2.source.dash.manifest.DashManifestParser
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
@@ -86,13 +84,22 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
 
     Log.d(TAG, "Initializing player")
 
+    val isRtmp = (streamUri?.scheme?.equals("rmtp", ignoreCase = true)) ?: false
+    val loadControl = if (isRtmp) {
+      LowLatencyLoadControl()
+    } else {
+      DefaultLoadControl.Builder()
+          .setBufferDurationsMs(5000, 5000, 0, 0)
+          .createDefaultLoadControl()
+    }
+
     player = ExoPlayerFactory.newSimpleInstance(
         context,
         DefaultRenderersFactory(context).apply {
           setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
         },
         DefaultTrackSelector(AdaptiveTrackSelection.Factory()),
-        LowLatencyLoadControl()
+        loadControl
     ).apply {
       addListener(this@PlayerFragment)
       playerView.player = this
@@ -102,8 +109,8 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
     play()
   }
 
-  fun configure(rtmpUri: Uri, gameId: UUID) {
-    this.streamUri = rtmpUri
+  fun configure(streamUri: Uri, gameId: UUID) {
+    this.streamUri = streamUri
     this.gameId = gameId
     play()
   }
@@ -118,12 +125,19 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
       playerView.visibility = View.VISIBLE
       player?.repeatMode = Player.REPEAT_MODE_OFF
 
-      val mediaSource = ExtractorMediaSource.Factory(
-          DefaultDataSourceFactory(
-              context,
-              Util.getUserAgent(context, "TheQKit Live Player")
-          )
-      ).createMediaSource(streamUri)
+      val dataSourceFactory = DefaultDataSourceFactory(
+          context,
+          Util.getUserAgent(context, "TheQKit Live Player"))
+
+      val isRtmp = (streamUri?.scheme?.equals("rmtp", ignoreCase = true)) ?: false
+      val mediaSource = if (isRtmp) {
+        ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(streamUri)
+      } else {
+        DashLLMediaSource.Factory(dataSourceFactory)
+            .setManifestParser(FilteringManifestParser(DashManifestParser(), null))
+            .createMediaSource(streamUri)
+      }
 
       mediaSource.addEventListener(mainHandler, this)
 

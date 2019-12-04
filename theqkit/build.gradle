@@ -65,6 +65,7 @@ dependencies {
   implementation 'com.google.android.exoplayer:exoplayer-core:2.10.8'
   implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.8'
   implementation 'com.google.android.exoplayer:extension-rtmp:2.10.8'
+  implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.8'
   implementation 'com.tylerjroach:eventsource:1.2.11'
   implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
   implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'

@@ -1244,7 +1244,11 @@ public final class DashLLMediaSource extends BaseMediaSource {
                 }
             }
             // Attempt to snap to the start of the corresponding video segment.
-            int periodIndex = 0;
+
+            // *** ULL-CMAF Change ***
+            // OLD:
+
+/*            int periodIndex = 0;
             long defaultStartPositionInPeriodUs = offsetInFirstPeriodUs + windowDefaultStartPositionUs;
             long periodDurationUs = manifest.getPeriodDurationUs(periodIndex);
             while (periodIndex < manifest.getPeriodCount() - 1
@@ -1270,7 +1274,10 @@ public final class DashLLMediaSource extends BaseMediaSource {
             }
             long segmentNum = snapIndex.getSegmentNum(defaultStartPositionInPeriodUs, periodDurationUs);
             return windowDefaultStartPositionUs + snapIndex.getTimeUs(segmentNum)
-                    - defaultStartPositionInPeriodUs;
+                    - defaultStartPositionInPeriodUs;*/
+
+            // NEW
+            return windowDefaultStartPositionUs;
         }
 
         @Override

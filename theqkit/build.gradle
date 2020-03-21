@@ -72,6 +72,10 @@ dependencies {
   implementation 'org.koin:koin-android:1.0.2'
   // Koin for Android Architecture ViewModel
   implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+
+  testImplementation 'junit:junit:4.12'
+  testImplementation 'androidx.test:core:1.2.0'
+  testImplementation 'io.mockk:mockk:1.9.3.kotlin12'
 }
 
 dokka {

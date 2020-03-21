@@ -25,7 +25,7 @@ internal class WinnersRecyclerAdapter(
     val context: Context
 ) : RecyclerView.Adapter<ViewHolder>(), KoinComponent {
 
-  private val profilePhotoLoader: GameWinnerProfilePhotoLoader? by inject()
+  private val profilePhotoLoader: GameWinnerProfilePhotoLoader  by inject()
 
   override fun getItemCount() = winners.profiles.size
 
@@ -41,10 +41,7 @@ internal class WinnersRecyclerAdapter(
 
     val defaultProfileDrawable = getDefaultProfileDrawable(winner)
 
-    profilePhotoLoader
-        ?.load(context, winner, holder.profilePic, defaultProfileDrawable)
-        ?: holder.profilePic.setImageDrawable(defaultProfileDrawable)
-  }
+    profilePhotoLoader.load(context, winner, holder.profilePic, defaultProfileDrawable) }
 
   private fun getDefaultProfileDrawable(winner: GameWinnerState) = TextDrawable.builder().buildRound(
       winner.username[0].toString().toUpperCase(),
@@ -67,4 +64,11 @@ interface GameWinnerProfilePhotoLoader {
     imageView: ImageView,
     defaultDrawable: Drawable
   )
+}
+
+/** @suppress **/
+internal class DefaultProfilePhotoLoader : GameWinnerProfilePhotoLoader {
+    override fun load(context: Context, winner: GameWinnerState, imageView: ImageView, defaultDrawable: Drawable){
+        imageView.setImageDrawable(defaultDrawable)
+    }
 }

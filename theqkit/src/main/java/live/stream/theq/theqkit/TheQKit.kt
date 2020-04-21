@@ -5,10 +5,7 @@ import android.content.Intent
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
-import live.stream.theq.theqkit.data.sdk.AccountKitLogin
-import live.stream.theq.theqkit.data.sdk.ApiError
-import live.stream.theq.theqkit.data.sdk.FirebaseLogin
-import live.stream.theq.theqkit.data.sdk.GameResponse
+import live.stream.theq.theqkit.data.sdk.*
 import live.stream.theq.theqkit.di.repositoryModule
 import live.stream.theq.theqkit.di.theQKitModule
 import live.stream.theq.theqkit.di.viewModelModule
@@ -236,6 +233,16 @@ class TheQKit {
   fun getEventStream(): Observable<Event> {
     throwIfNotInitialized()
     return Events.getEventStream(isPartnerImplementation = !config.partnerCode.isNullOrEmpty())
+  }
+
+  @Keep
+  fun updateUser(email: String? = null, phoneNumber: String? = null) {
+    throwIfNotInitialized()
+    prefsHelper.userId?.let {
+      userRepository.updateUserAsync(
+              it, UserUpdateRequest(email,phoneNumber)
+      )
+    }
   }
 
 

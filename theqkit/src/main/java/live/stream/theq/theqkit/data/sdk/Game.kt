@@ -27,7 +27,22 @@ data class GameListResponse(val games: List<GameResponse>)
     val notEligibleMessage: String?,
     val subscriberOnly: Boolean?,
     val adCode: String?,
-    val gameType: String) : Parcelable
+    val gameType: String,
+    val winCondition: String) : Parcelable {
+
+    enum class WinCondition {
+        ELIMINATION,
+        POINTS
+    }
+
+    fun winConditionType(): WinCondition {
+        return if (winCondition == "POINTS") {
+            WinCondition.POINTS
+        } else {
+            WinCondition.ELIMINATION
+        }
+    }
+}
 
 /** @suppress **/
 @Parcelize data class Theme(
@@ -41,7 +56,11 @@ data class GameListResponse(val games: List<GameResponse>)
     val defaultColorCode: String) : Parcelable
 
 /** @suppress **/
-data class Choice(val id: String, val questionId: UUID, val choice: String)
+data class Choice(
+        val id: String,
+        val questionId: UUID,
+        val choice: String,
+        val pointValue: Long?)
 
 /** @suppress **/
 data class ResponseResult(

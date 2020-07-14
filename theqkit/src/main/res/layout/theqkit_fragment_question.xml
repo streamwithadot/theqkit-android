@@ -79,6 +79,18 @@
       style="@style/TheQKit_Status_Text_Style"
       />
 
+  <TextView
+      android:id="@+id/questionPointsText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="@id/leftGuideline"
+      app:layout_constraintRight_toRightOf="@id/rightGuideline"
+      app:layout_constraintBottom_toTopOf="@id/questionText"
+      tools:text="300 Points"
+      style="@style/TheQKit_Question_Points_Style"
+      android:visibility="gone"
+      />
+
   <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/questionText"
       android:layout_width="match_parent"

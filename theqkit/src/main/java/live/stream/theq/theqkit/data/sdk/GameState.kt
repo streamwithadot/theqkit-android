@@ -23,7 +23,8 @@ data class GameState(
   val isEnded: Boolean = false,
   val scheduled: Long,
   val theme: Theme?,
-  val lastEvent: GameEvent
+  val lastEvent: GameEvent,
+  val score: Int?
 ) {
 
   internal constructor(gameStatus: GameStatus, game: GameResponse) : this(
@@ -37,7 +38,8 @@ data class GameState(
       heartsEnabled = game.heartsEnabled,
       scheduled = game.scheduled,
       theme = game.theme,
-      lastEvent = STATUS
+      lastEvent = STATUS,
+      score = gameStatus.score
   )
 
   // note: special case for handling a question payload on the GameStatus event.
@@ -119,7 +121,8 @@ internal data class QuestionStartState(
   override val questionText: String,
   override val choices: List<InitialChoiceState>?,
   override val questionType: String,
-  val responseExpiry: Long
+  val responseExpiry: Long,
+  val pointsValue: Int?
 ) : QuestionState {
 
   constructor(questionPayload: QuestionPayload) : this(
@@ -129,7 +132,8 @@ internal data class QuestionStartState(
       questionNumber = questionPayload.number,
       questionText = questionPayload.question,
       choices = questionPayload.choices?.map(::InitialChoiceState),
-      responseExpiry = System.currentTimeMillis() + (questionPayload.secondsToRespond * 1000)
+      responseExpiry = System.currentTimeMillis() + (questionPayload.secondsToRespond * 1000),
+      pointsValue = questionPayload.pointValue
   )
 
   constructor(questionStart: QuestionStart) : this(
@@ -139,7 +143,8 @@ internal data class QuestionStartState(
       questionNumber = questionStart.number,
       questionText = questionStart.question,
       choices = questionStart.choices?.map(::InitialChoiceState),
-      responseExpiry = System.currentTimeMillis() + (questionStart.secondsToRespond * 1000)
+      responseExpiry = System.currentTimeMillis() + (questionStart.secondsToRespond * 1000),
+      pointsValue = questionStart.pointValue
   )
 
 }
@@ -183,7 +188,9 @@ data class QuestionResultState(
   val canUseSubscription: Boolean,
   val serverReceivedSelection: String?,
   val wasUserCorrect: Boolean,
-  val userWasEliminatedOnQuestion: Boolean
+  val userWasEliminatedOnQuestion: Boolean,
+  val pointsValue: Int?,
+  val score: Int?
 ) : QuestionState {
 
   internal constructor(
@@ -207,7 +214,9 @@ data class QuestionResultState(
       wasUserCorrect = isUserCorrect(
           questionResult
       ),
-      userWasEliminatedOnQuestion = userPreviouslyActive && !questionResult.active
+      userWasEliminatedOnQuestion = userPreviouslyActive && !questionResult.active,
+      pointsValue = questionResult.pointValue,
+      score = questionResult.score
   )
 
   companion object {

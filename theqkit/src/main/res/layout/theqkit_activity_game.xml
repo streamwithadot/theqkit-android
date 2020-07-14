@@ -164,6 +164,30 @@
         android:visibility="gone"
         tools:visibility="visible" />
 
+    <TextView
+        android:id="@+id/currentPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionNumberText"
+        android:textColor="@color/theqkit_white"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/additionalPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/currentPoints"
+        android:textColor="@color/theqkit_white"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        />
+
   </RelativeLayout>
 
   <com.airbnb.lottie.LottieAnimationView

@@ -132,6 +132,14 @@ internal class QuestionFragment : Fragment() {
 
     questionText.text = question.questionText
 
+    val pointsValue = question.pointsValue
+    if (pointsValue != null) {
+      questionPointsText.text = resources.getQuantityString(R.plurals.theqkit_n_points, pointsValue, pointsValue)
+      questionPointsText.visibility = View.VISIBLE
+    } else {
+      questionPointsText.visibility = View.GONE
+    }
+
     val backgroundColorId: Int
 
     if (isPopularChoice) {

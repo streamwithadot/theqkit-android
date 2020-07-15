@@ -141,7 +141,7 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
   private fun onQuestionResult(game: GameState) {
     val question = game.currentQuestion as QuestionResultState? ?: return
 
-    updateScore(game.score)
+    updateScore(question.score)
     updateAdditionalPoints(question.pointsValue)
 
     if (question.userWasEliminatedOnQuestion) {
@@ -235,16 +235,16 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
   }
 
   private fun updateScore(score: Int?) {
-    if (score != null) {
+    if (score != null && score > 0) {
       currentPoints.text = resources.getQuantityString(R.plurals.theqkit_n_points, score, score)
       currentPoints.visibility = View.VISIBLE
     } else {
-      currentPoints.visibility = View.GONE
+      currentPoints.visibility = View.INVISIBLE
     }
   }
 
   private fun updateAdditionalPoints(pointsValue: Int?) {
-    if (pointsValue != null) {
+    if (pointsValue != null && pointsValue > 0) {
       additionalPoints.text = resources.getQuantityString(R.plurals.theqkit_n_additional_points, pointsValue, pointsValue)
       additionalPoints.visibility = View.VISIBLE
     } else {

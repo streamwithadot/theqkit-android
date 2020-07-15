@@ -46,7 +46,7 @@
 
   <plurals name="theqkit_n_points">
     <item quantity="one">%1$d Point</item>
-    <item quantity="other">%1$d Points!</item>
+    <item quantity="other">%1$d Points</item>
   </plurals>
 
   <plurals name="theqkit_n_additional_points">

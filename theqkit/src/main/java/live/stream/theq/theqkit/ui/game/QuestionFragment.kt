@@ -12,10 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import kotlinx.android.synthetic.main.theqkit_fragment_question.animationView
-import kotlinx.android.synthetic.main.theqkit_fragment_question.navSpacer
-import kotlinx.android.synthetic.main.theqkit_fragment_question.questionStatus
-import kotlinx.android.synthetic.main.theqkit_fragment_question.questionText
+import kotlinx.android.synthetic.main.theqkit_fragment_question.*
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_ENDED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_RESULT

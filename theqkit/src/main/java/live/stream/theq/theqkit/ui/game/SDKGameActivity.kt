@@ -106,9 +106,12 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
     if (!game.isUserActive) showJoinLate()
 
     updateHeartIcon(game.isHeartEligible)
+    updateScore(game.score)
+    updateAdditionalPoints(null)
   }
 
   private fun onQuestionStarted(game: GameState) {
+    updateAdditionalPoints(null)
     val question = game.currentQuestion as QuestionStartState? ?: return
 
     DeviceUtil.vibratePhone(this)
@@ -137,6 +140,9 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
 
   private fun onQuestionResult(game: GameState) {
     val question = game.currentQuestion as QuestionResultState? ?: return
+
+    updateScore(question.score)
+    updateAdditionalPoints(question.pointsValue)
 
     if (question.userWasEliminatedOnQuestion) {
       if (gameViewModel.didUserSkipQuestionAfterPurchase()) {
@@ -217,6 +223,7 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
   }
 
   private fun onGameWinners(game: GameState) {
+    updateAdditionalPoints(null)
     game.winners?.let { showGameWinnersDialog() }
   }
 
@@ -225,6 +232,24 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
     heartEligible.setImageResource(
         if (canRedeemHeart) R.drawable.theqkit_heart_game else R.drawable.theqkit_heart_game_unavailable
     )
+  }
+
+  private fun updateScore(score: Int?) {
+    if (score != null && score > 0) {
+      currentPoints.text = resources.getQuantityString(R.plurals.theqkit_n_points, score, score)
+      currentPoints.visibility = View.VISIBLE
+    } else {
+      currentPoints.visibility = View.INVISIBLE
+    }
+  }
+
+  private fun updateAdditionalPoints(pointsValue: Int?) {
+    if (pointsValue != null && pointsValue > 0) {
+      additionalPoints.text = resources.getQuantityString(R.plurals.theqkit_n_additional_points, pointsValue, pointsValue)
+      additionalPoints.visibility = View.VISIBLE
+    } else {
+      additionalPoints.visibility = View.GONE
+    }
   }
 
   private fun showBackPressedWarning() {

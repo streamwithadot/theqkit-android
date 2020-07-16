@@ -12,10 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import kotlinx.android.synthetic.main.theqkit_fragment_question.animationView
-import kotlinx.android.synthetic.main.theqkit_fragment_question.navSpacer
-import kotlinx.android.synthetic.main.theqkit_fragment_question.questionStatus
-import kotlinx.android.synthetic.main.theqkit_fragment_question.questionText
+import kotlinx.android.synthetic.main.theqkit_fragment_question.*
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_ENDED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_RESULT
@@ -131,6 +128,14 @@ internal class QuestionFragment : Fragment() {
     val isPopularChoice = question.questionType == Question.TYPE_POPULAR
 
     questionText.text = question.questionText
+
+    val pointsValue = question.pointsValue
+    if (pointsValue != null) {
+      questionPointsText.text = resources.getQuantityString(R.plurals.theqkit_n_points, pointsValue, pointsValue)
+      questionPointsText.visibility = View.VISIBLE
+    } else {
+      questionPointsText.visibility = View.GONE
+    }
 
     val backgroundColorId: Int
 

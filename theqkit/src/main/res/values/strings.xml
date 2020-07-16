@@ -44,6 +44,16 @@
     <item quantity="other">%1$d Winners!</item>
   </plurals>
 
+  <plurals name="theqkit_n_points">
+    <item quantity="one">%1$d Point</item>
+    <item quantity="other">%1$d Points</item>
+  </plurals>
+
+  <plurals name="theqkit_n_additional_points">
+    <item quantity="one">+ %1$d Point</item>
+    <item quantity="other">+ %1$d Points!</item>
+  </plurals>
+
   <string name="theqkit_full_currency_format">$###,###,##0.00</string>
   <string name="theqkit_rounded_currency_format">$###,###,##0</string>
 </resources>

@@ -7,7 +7,8 @@ internal data class GameStatus(
   val id: Long,
   val active: Boolean,
   val heartEligible: Boolean,
-  val question: QuestionPayload?
+  val question: QuestionPayload?,
+  val score: Int?
 )
 
 internal data class GameWon(
@@ -24,7 +25,8 @@ internal data class QuestionPayload(
   val choices: List<Choice>?,
   val secondsToRespond: Long,
   val number: Int,
-  val total: Int
+  val total: Int,
+  val pointValue: Int?
 )
 
 //internal data class GameWarn(
@@ -60,7 +62,8 @@ internal data class QuestionStart(
   val choices: List<Choice>?,
   val secondsToRespond: Long,
   val number: Int,
-  val total: Int
+  val total: Int,
+  val pointValue: Int?
 )
 
 internal data class QuestionEnd(
@@ -83,7 +86,9 @@ internal data class QuestionResult(
   val active: Boolean,
   val selection: String?,
   val canRedeemHeart: Boolean,
-  val canUseSubscription: Boolean = false
+  val canUseSubscription: Boolean = false,
+  val pointValue: Int?,
+  val score: Int?
 ) {
   fun getResultList(): List<ResponseResult> {
     return when(questionType) {

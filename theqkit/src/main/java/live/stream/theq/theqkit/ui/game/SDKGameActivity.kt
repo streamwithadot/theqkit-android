@@ -17,19 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.theqkit_activity_game.*
 import live.stream.theq.theqkit.R
+import live.stream.theq.theqkit.data.sdk.*
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.GAME_ENDED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.GAME_WINNERS
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_ENDED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_RESULT
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.QUESTION_STARTED
 import live.stream.theq.theqkit.data.sdk.GameState.Companion.GameEvent.STATUS
+import live.stream.theq.theqkit.data.sdk.QuestionEndState
+import live.stream.theq.theqkit.data.sdk.QuestionStartState
 import live.stream.theq.theqkit.util.AndroidBug5497Workaround
 import live.stream.theq.theqkit.util.DeviceUtil
-import live.stream.theq.theqkit.data.sdk.GameResponse
-import live.stream.theq.theqkit.data.sdk.GameState
-import live.stream.theq.theqkit.data.sdk.QuestionEndState
-import live.stream.theq.theqkit.data.sdk.QuestionResultState
-import live.stream.theq.theqkit.data.sdk.QuestionStartState
 import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.events.ExitGameEvent
 import live.stream.theq.theqkit.events.HeartNotUsedEvent
@@ -148,10 +146,10 @@ open class SDKGameActivity : AppCompatActivity(), ExtraLifeListener {
       if (gameViewModel.didUserSkipQuestionAfterPurchase()) {
         showLateSubscriptionWarning()
         showEliminatedNotification()
-      } else if (question.canRedeemHeart) {
+      } else if (question.canRedeemHeart && (question.questionType != Question.TYPE_CHOICE_SURVEY && question.questionType != Question.TYPE_TEXT_SURVEY)) {
         updateHeartIcon(false)
         showExtraLifeDialog()
-      } else if (question.canUseSubscription && billingSupported) {
+      } else if (question.canUseSubscription && billingSupported && (question.questionType != Question.TYPE_CHOICE_SURVEY && question.questionType != Question.TYPE_TEXT_SURVEY)) {
         updateHeartIcon(false)
         showSubscribePromptDialog(game.currentQuestionNumber, game.totalQuestionsCount)
       } else {

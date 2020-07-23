@@ -108,10 +108,10 @@ interface QuestionState {
   val questionType: String
 
   val isPopularChoice
-    get() = questionType == Question.TYPE_POPULAR
+    get() = (questionType == Question.TYPE_POPULAR || questionType == Question.TYPE_TEXT_SURVEY)
 
   val isTrivia
-    get() = questionType == Question.TYPE_TRIVIA
+    get() = (questionType == Question.TYPE_TRIVIA || questionType == Question.TYPE_CHOICE_SURVEY)
 }
 
 internal data class QuestionStartState(
@@ -224,6 +224,8 @@ data class QuestionResultState(
       return when(questionResult.questionType) {
         Question.TYPE_TRIVIA -> questionResult.answerId == questionResult.selection
         Question.TYPE_POPULAR -> questionResult.selection != null && questionResult.selection == questionResult.correctResponse
+        Question.TYPE_TEXT_SURVEY -> true
+        Question.TYPE_CHOICE_SURVEY -> true
         else -> false
       }
     }

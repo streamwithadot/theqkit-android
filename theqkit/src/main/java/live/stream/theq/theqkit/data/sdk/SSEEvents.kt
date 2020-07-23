@@ -94,6 +94,8 @@ internal data class QuestionResult(
     return when(questionType) {
       Question.TYPE_TRIVIA -> choices
       Question.TYPE_POPULAR -> results
+      Question.TYPE_TEXT_SURVEY -> results
+      Question.TYPE_CHOICE_SURVEY -> choices
       else -> emptyList()
     } ?: emptyList()
   }
@@ -111,5 +113,7 @@ class Question {
   companion object {
     const val TYPE_TRIVIA = "TRIVIA"
     const val TYPE_POPULAR = "POPULAR"
+    const val TYPE_TEXT_SURVEY = "TEXT_SURVEY"
+    const val TYPE_CHOICE_SURVEY = "CHOICE_SURVEY"
   }
 }

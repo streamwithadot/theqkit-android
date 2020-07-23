@@ -46,7 +46,8 @@ internal class GameButtonFragment : Fragment() {
     super.onCreate(savedInstanceState)
 
     gameViewModel.game.observe(this, Observer { game ->
-      if (game?.currentQuestion?.questionType != Question.TYPE_TRIVIA) {
+      if (game?.currentQuestion?.questionType != Question.TYPE_TRIVIA
+              && game?.currentQuestion?.questionType != Question.TYPE_CHOICE_SURVEY) {
         hide()
         return@Observer
       }
@@ -154,7 +155,9 @@ internal class GameButtonFragment : Fragment() {
       getDrawable(R.drawable.theqkit_progress_bar_selected)?.let(choiceProgress::setProgressDrawable)
       getColor(R.color.theqkit_selected_green)?.let(choiceText::setTextColor)
       getColor(R.color.theqkit_selected_green)?.let(responsesText::setTextColor)
-      plusOne.visibility = View.VISIBLE
+      if(gameViewModel.game.value?.currentQuestion?.questionType != Question.TYPE_CHOICE_SURVEY) {
+        plusOne.visibility = View.VISIBLE
+      }
     } else if (choice.isCorrect && !isSelected) {
       getDrawable(R.drawable.theqkit_correct_unselected)?.let(choiceImage::setImageDrawable)
       getDrawable(R.drawable.theqkit_progress_bar_not_selected)?.let(choiceProgress::setProgressDrawable)

@@ -42,7 +42,7 @@ internal class GameFreeResponseFragment : Fragment() {
     super.onCreate(savedInstanceState)
 
     gameViewModel.game.observe(this, Observer { game ->
-      if (game?.currentQuestion?.questionType != Question.TYPE_POPULAR) {
+      if (game?.currentQuestion?.questionType != Question.TYPE_POPULAR && game?.currentQuestion?.questionType != Question.TYPE_TEXT_SURVEY) {
         hide()
         return@Observer
       }

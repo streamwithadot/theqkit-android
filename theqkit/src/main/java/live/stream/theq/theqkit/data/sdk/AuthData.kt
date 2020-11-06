@@ -36,7 +36,8 @@ data class SignupAuthData(
   val contactEmail: String? = null,
   val marketingOptIn: Boolean = false,
   val profilePicUrl: String? = null,
-  val device: Device? = null)
+  val device: Device? = null,
+  val autoHandleUsernameCollision: Boolean? = null)
 
 /** @suppress **/
 data class AuthResponse(val user: User, val oauth: OauthResponse, val tester: Boolean?)

@@ -135,7 +135,7 @@ internal class LoginViewModel(
         val signupAuthData =
           SignupAuthData(
             AuthData(accountKit = loginAuthData.accountKit, firebase = loginAuthData.firebase),
-            suggestedUsername)
+            suggestedUsername, autoHandleUsernameCollision = true)
         val signupResponse = userRepository.signupAsync(config.partnerCode, signupAuthData)
             .await()
         val authResponse = signupResponse.body()

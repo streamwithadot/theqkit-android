@@ -25,7 +25,8 @@ import java.lang.Exception
 internal class LoginViewModel(
   private val loginAuthData: LoginAuthData,
   private val suggestedUsername: String?,
-  internal val listener: LoginResponseListener?
+  internal val listener: LoginResponseListener?,
+  private val autoHandleUsernameCollision: Boolean
 ) : ViewModel(), CoroutineScope {
 
   private val config = TheQKit.getInstance().config
@@ -135,7 +136,7 @@ internal class LoginViewModel(
         val signupAuthData =
           SignupAuthData(
             AuthData(accountKit = loginAuthData.accountKit, firebase = loginAuthData.firebase),
-            suggestedUsername, autoHandleUsernameCollision = true)
+            suggestedUsername, autoHandleUsernameCollision = autoHandleUsernameCollision)
         val signupResponse = userRepository.signupAsync(config.partnerCode, signupAuthData)
             .await()
         val authResponse = signupResponse.body()

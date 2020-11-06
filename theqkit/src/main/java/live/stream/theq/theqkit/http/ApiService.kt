@@ -96,8 +96,8 @@ interface ApiService {
 
   @GET("season")
   fun seasonAsync(
-    @Query("includeCategories") includeCategories: String,
-    @Query("includeLeaderboards") includeLeaderboards: String
+    @Query("includeCategories") includeCategories: Boolean,
+    @Query("includeLeaderboards") includeLeaderboards: Boolean
   ): Deferred<Response<SeasonResponse>>
 
   @POST("users")

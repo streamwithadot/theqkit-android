@@ -92,7 +92,8 @@ class TheQKit {
     accountKitId: String,
     accountKitAccessToken: String,
     suggestedUsername: String? = null,
-    listener: LoginResponseListener
+    listener: LoginResponseListener,
+    autoHandleUsernameCollision: Boolean = true
   ) {
     throwIfNotInitialized()
     if (isAuthenticated()) {
@@ -101,7 +102,7 @@ class TheQKit {
     }
     val accountKitLogin = AccountKitLogin(accountKitId, accountKitAccessToken)
     LoginDialogFragment.newInstance(accountKitLogin = accountKitLogin,
-        suggestedUsername = suggestedUsername, listener = listener)
+        suggestedUsername = suggestedUsername, listener = listener, autoHandleUsernameCollision = true)
         .show(activity.supportFragmentManager, LoginDialogFragment::class.java.name)
   }
 
@@ -131,7 +132,8 @@ class TheQKit {
     firebaseId: String,
     firebaseAccessToken: String,
     suggestedUsername: String? = null,
-    listener: LoginResponseListener
+    listener: LoginResponseListener,
+    autoHandleUsernameCollision: Boolean = true
   ) {
     throwIfNotInitialized()
     if (isAuthenticated()) {
@@ -140,7 +142,7 @@ class TheQKit {
     }
     val firebaseLogin = FirebaseLogin(firebaseId, firebaseAccessToken)
     LoginDialogFragment.newInstance(firebaseLogin = firebaseLogin,
-        suggestedUsername = suggestedUsername, listener = listener)
+        suggestedUsername = suggestedUsername, listener = listener, autoHandleUsernameCollision = autoHandleUsernameCollision)
         .show(activity.supportFragmentManager, LoginDialogFragment::class.java.name)
   }
 

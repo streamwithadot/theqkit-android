@@ -46,11 +46,12 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
         KEY_LOGIN_AUTH_DATA)!!
     val suggestedUsername = arguments!!.getString(
         KEY_SUGGESTED_USERNAME)
+    val autoHandleUsernameCollision = arguments!!.getBoolean(KEY_AUTO_ANDLE_USERNAME_COLLISION)
 
     viewModel =
       ViewModelProviders.of(this,
           LoginViewModelFactory(loginAuthData, suggestedUsername,
-              listener))
+              listener, autoHandleUsernameCollision))
           .get(LoginViewModel::class.java)
   }
 
@@ -142,11 +143,13 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
 
     private const val KEY_LOGIN_AUTH_DATA = "KEY_LOGIN_AUTH_DATA"
     private const val KEY_SUGGESTED_USERNAME = "KEY_SUGGESTED_USERNAME"
+    private const val KEY_AUTO_ANDLE_USERNAME_COLLISION = "KEY_AUTO_HANDLE_USERNAME_COLLISION"
 
     fun newInstance(accountKitLogin: AccountKitLogin? = null,
       firebaseLogin: FirebaseLogin? = null,
       suggestedUsername: String?,
-      listener: LoginResponseListener
+      listener: LoginResponseListener,
+      autoHandleUsernameCollision: Boolean
     ): LoginDialogFragment {
       val loginDialogFragment = LoginDialogFragment().apply {
         arguments = Bundle().apply {
@@ -157,6 +160,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
           }
           putParcelable(KEY_LOGIN_AUTH_DATA, loginAuthData)
           putString(KEY_SUGGESTED_USERNAME, suggestedUsername)
+          putBoolean(KEY_AUTO_ANDLE_USERNAME_COLLISION, autoHandleUsernameCollision)
         }
       }
       loginDialogFragment.setListener(listener)
@@ -168,11 +172,12 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
 internal class LoginViewModelFactory(
   private val loginAuthData: LoginAuthData,
   private val suggestedUsername: String?,
-  private val listener: LoginResponseListener?
+  private val listener: LoginResponseListener?,
+  private val autoHandleUsernameCollision: Boolean
 ) : ViewModelProvider.NewInstanceFactory() {
 
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
     return LoginViewModel(loginAuthData, suggestedUsername,
-        listener) as T
+        listener, autoHandleUsernameCollision) as T
   }
 }

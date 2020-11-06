@@ -142,7 +142,7 @@ internal class GameRepository(
       val requestTimestamp = System.currentTimeMillis()
       try {
         val wrappedSeasonResponse =
-          apiService.seasonAsync(includeCategories = "true", includeLeaderboards = "true").await()
+          apiService.seasonAsync(includeCategories = true, includeLeaderboards = true).await()
         val seasonResponse = wrappedSeasonResponse.body()
         if (wrappedSeasonResponse.isSuccessful && seasonResponse != null) {
           lastSuccessfulSeasonResponse =

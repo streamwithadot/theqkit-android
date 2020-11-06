@@ -83,6 +83,7 @@ class TheQKit {
    * exists, we will auto-increment a number at the end of the suggested username until a unique
    * username is found. Once the user confirms a username, the account will be created and the user
    * logged in.
+   * @param autoHandleUsernameCollision set to automatically resolve username collisions. Defaults to true
    * @param listener to handle response
    */
   @Keep
@@ -92,8 +93,8 @@ class TheQKit {
     accountKitId: String,
     accountKitAccessToken: String,
     suggestedUsername: String? = null,
-    listener: LoginResponseListener,
-    autoHandleUsernameCollision: Boolean = true
+    autoHandleUsernameCollision: Boolean = true,
+    listener: LoginResponseListener
   ) {
     throwIfNotInitialized()
     if (isAuthenticated()) {
@@ -123,7 +124,9 @@ class TheQKit {
    * exists, we will auto-increment a number at the end of the suggested username until a unique
    * username is found. Once the user confirms a username, the account will be created and the user
    * logged in.
+   * @param autoHandleUsernameCollision set to automatically resolve username collisions. Defaults to true
    * @param listener to handle response
+
    */
   @Keep
   @JvmOverloads
@@ -132,8 +135,8 @@ class TheQKit {
     firebaseId: String,
     firebaseAccessToken: String,
     suggestedUsername: String? = null,
-    listener: LoginResponseListener,
-    autoHandleUsernameCollision: Boolean = true
+    autoHandleUsernameCollision: Boolean = true,
+    listener: LoginResponseListener
   ) {
     throwIfNotInitialized()
     if (isAuthenticated()) {

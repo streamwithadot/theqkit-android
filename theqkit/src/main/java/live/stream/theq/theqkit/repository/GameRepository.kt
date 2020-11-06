@@ -5,10 +5,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import live.stream.theq.theqkit.TheQConfig
+import live.stream.theq.theqkit.data.app.SeasonResponse
 import live.stream.theq.theqkit.data.sdk.ApiError
 import live.stream.theq.theqkit.data.sdk.GameResponse
 import live.stream.theq.theqkit.http.RestClient
 import live.stream.theq.theqkit.listener.GameResponseListener
+import live.stream.theq.theqkit.listener.SeasonResponseListener
 import live.stream.theq.theqkit.util.PrefsHelper
 import java.lang.Exception
 import java.util.concurrent.atomic.AtomicBoolean
@@ -28,6 +30,9 @@ internal class GameRepository(
 
   private val testRequestInProgress = AtomicBoolean()
   private var testLastSuccessfulResponse: LastSuccessfulResponse? = null
+
+  private val seasonRequestInProgress = AtomicBoolean()
+  private var lastSuccessfulSeasonResponse: LastSuccessfulSeasonResponse? = null
 
   internal fun fetchGames(listener: GameResponseListener) {
     if (requestInProgress.get()) {
@@ -113,9 +118,55 @@ internal class GameRepository(
     }
   }
 
+  internal fun fetchSeason(listener: SeasonResponseListener) {
+    if (seasonRequestInProgress.get()) {
+      launch {
+        listener.onFailure(
+          ApiError("REQUEST_IN_PROGRESS",
+            "There is already an existing request in progress."))
+      }
+      return
+    }
+
+    seasonRequestInProgress.set(true)
+
+    launch {
+      val cachedResponse = lastSuccessfulSeasonResponse
+      if (cachedResponse != null && cachedResponse.requestedTime > System.currentTimeMillis() - MAX_CACHE_LIMIT_MILLISECONDS) {
+        listener.onSuccess(cachedResponse.seasonResponse)
+        requestInProgress.set(false)
+        return@launch
+      }
+
+      lastSuccessfulSeasonResponse = null
+      val requestTimestamp = System.currentTimeMillis()
+      try {
+        val wrappedSeasonResponse =
+          apiService.seasonAsync(includeCategories = "true", includeLeaderboards = "true").await()
+        val seasonResponse = wrappedSeasonResponse.body()
+        if (wrappedSeasonResponse.isSuccessful && seasonResponse != null) {
+          lastSuccessfulSeasonResponse =
+            LastSuccessfulSeasonResponse(
+              requestTimestamp, seasonResponse)
+          listener.onSuccess(seasonResponse)
+        } else {
+          listener.onFailure(ApiError())
+        }
+      } catch (e: Exception) {
+        listener.onFailure(ApiError())
+      }
+      seasonRequestInProgress.set(false)
+    }
+  }
+
   private data class LastSuccessfulResponse(
     val requestedTime: Long,
     val games: List<GameResponse>
+  )
+
+  private data class LastSuccessfulSeasonResponse(
+    val requestedTime: Long,
+    val seasonResponse: SeasonResponse
   )
 
   companion object {

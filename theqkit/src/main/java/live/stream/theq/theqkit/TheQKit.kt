@@ -15,6 +15,7 @@ import live.stream.theq.theqkit.exception.QKitInitializationException
 import live.stream.theq.theqkit.http.RestClient
 import live.stream.theq.theqkit.listener.GameResponseListener
 import live.stream.theq.theqkit.listener.LoginResponseListener
+import live.stream.theq.theqkit.listener.SeasonResponseListener
 import live.stream.theq.theqkit.repository.GameRepository
 import live.stream.theq.theqkit.repository.UserRepository
 import live.stream.theq.theqkit.ui.cashout.CashoutDialogFragment
@@ -156,6 +157,17 @@ class TheQKit {
   }
 
   /**
+   *  Fetch season
+   *
+   *  @param listener [SeasonResponseListener] to handle response.
+   */
+  @Keep
+  fun fetchSeason(listener: SeasonResponseListener) {
+    throwIfNotInitialized()
+    gameRepository.fetchSeason(listener)
+  }
+
+  /**
    *  Fetch list of games
    *
    *  @param listener to handle response.
@@ -244,7 +256,6 @@ class TheQKit {
       )
     }
   }
-
 
   private fun throwIfNotInitialized() {
     if (!initialized) {

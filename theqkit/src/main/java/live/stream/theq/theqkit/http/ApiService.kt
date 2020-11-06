@@ -94,6 +94,12 @@ interface ApiService {
     @Query("includeLeaderboards") includeLeaderboards: String
   ): Observable<Result<SeasonResponse>>
 
+  @GET("season")
+  fun seasonAsync(
+    @Query("includeCategories") includeCategories: String,
+    @Query("includeLeaderboards") includeLeaderboards: String
+  ): Deferred<Response<SeasonResponse>>
+
   @POST("users")
   fun signup(
     @Query("referralCode") referralCode: String?,

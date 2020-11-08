@@ -1,9 +1,8 @@
 package live.stream.theq.theqkit.listener
 
 import androidx.annotation.Keep
-import live.stream.theq.theqkit.data.app.SeasonResponse
+import live.stream.theq.theqkit.data.sdk.SeasonResponse
 import live.stream.theq.theqkit.data.sdk.ApiError
-import live.stream.theq.theqkit.data.sdk.GameResponse
 
 /**
  * A listener interface for receiving the result of a [live.stream.theq.theqkit.TheQKit.fetchSeason] request.

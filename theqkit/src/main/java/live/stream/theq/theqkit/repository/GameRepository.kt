@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import live.stream.theq.theqkit.TheQConfig
-import live.stream.theq.theqkit.data.app.SeasonResponse
+import live.stream.theq.theqkit.data.sdk.SeasonResponse
 import live.stream.theq.theqkit.data.sdk.ApiError
 import live.stream.theq.theqkit.data.sdk.GameResponse
 import live.stream.theq.theqkit.http.RestClient

@@ -1,21 +1,21 @@
-package live.stream.theq.theqkit.data.app
+package live.stream.theq.theqkit.data.sdk
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Category(
-    val id: String,
-    val name: String,
-    val code: String,
-    val description: String,
-    val active: Boolean,
-    val iconImageUrl:String,
-    val backgroundImageUrl:String,
-    val backgroundVideoUrl: String,
-    val colorCode: String,
-    val leaderboard: List<LeaderboardEntry>?,
-    val reward: Double
+        val id: String,
+        val name: String,
+        val code: String,
+        val description: String,
+        val active: Boolean,
+        val iconImageUrl:String,
+        val backgroundImageUrl:String,
+        val backgroundVideoUrl: String,
+        val colorCode: String,
+        val leaderboard: List<LeaderboardEntry>?,
+        val reward: Double
 ) : Parcelable
 
 @Parcelize

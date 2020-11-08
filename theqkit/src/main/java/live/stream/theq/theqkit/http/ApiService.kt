@@ -11,8 +11,8 @@ import live.stream.theq.theqkit.data.app.Device
 import live.stream.theq.theqkit.data.app.FeedResponse
 import live.stream.theq.theqkit.data.sdk.GameListResponse
 import live.stream.theq.theqkit.data.sdk.LoginAuthData
-import live.stream.theq.theqkit.data.app.SeasonResponse
-import live.stream.theq.theqkit.data.app.SeasonScoreResponse
+import live.stream.theq.theqkit.data.sdk.SeasonResponse
+import live.stream.theq.theqkit.data.sdk.SeasonScoreResponse
 import live.stream.theq.theqkit.data.sdk.SignupAuthData
 import live.stream.theq.theqkit.data.sdk.SubmitAnswerResponse
 import live.stream.theq.theqkit.data.sdk.SuccessResponse

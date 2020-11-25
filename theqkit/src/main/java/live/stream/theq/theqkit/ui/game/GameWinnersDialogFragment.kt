@@ -41,6 +41,7 @@ internal class GameWinnersDialogFragment : DialogFragment() {
     winnerText.text =
       resources.getQuantityString(R.plurals.theqkit_n_winners, winners.count, winners.count)
 
+    prizeText.visibility = if (potSize > 0) View.VISIBLE else View.INVISIBLE
     prizeText.text = CurrencyHelper.getExactCurrency(view.context, potSize)
 
     winnerRecyler.adapter = WinnersRecyclerAdapter(winners, potSize, view.context)

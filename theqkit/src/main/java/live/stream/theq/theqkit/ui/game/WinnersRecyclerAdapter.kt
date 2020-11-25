@@ -37,6 +37,8 @@ internal class WinnersRecyclerAdapter(
     val winner = winners.profiles[position]
     holder.userName.text = winner.username
     val splitPot = BigDecimal(potSize/winners.count).setScale(2, BigDecimal.ROUND_HALF_UP).toDouble()
+
+    holder.balance.visibility = if (potSize > 0) View.VISIBLE else View.INVISIBLE
     holder.balance.text = CurrencyHelper.getExactCurrency(context, splitPot)
 
     val defaultProfileDrawable = getDefaultProfileDrawable(winner)

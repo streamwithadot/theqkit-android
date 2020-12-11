@@ -15,8 +15,8 @@ import live.stream.theq.theqkit.data.sdk.GameWinnerState
 import live.stream.theq.theqkit.data.sdk.GameWinnersState
 import live.stream.theq.theqkit.ui.game.WinnersRecyclerAdapter.ViewHolder
 import live.stream.theq.theqkit.util.CurrencyHelper
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.math.BigDecimal
 
 internal class WinnersRecyclerAdapter(

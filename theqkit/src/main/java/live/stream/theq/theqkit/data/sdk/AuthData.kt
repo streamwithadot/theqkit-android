@@ -5,26 +5,16 @@ import kotlinx.android.parcel.Parcelize
 import live.stream.theq.theqkit.data.app.Device
 
 /** @suppress **/
-@Parcelize data class FacebookLogin(val id: String, val accessToken: String) : Parcelable
-
-/** @suppress **/
-@Parcelize data class AccountKitLogin(val id: String, val accessToken: String) : Parcelable
-
-/** @suppress **/
 @Parcelize data class FirebaseLogin(val id: String, val accessToken: String): Parcelable
 
 /** @suppress **/
 @Parcelize data class LoginAuthData(
-  val facebook: FacebookLogin? = null,
-  val accountKit: AccountKitLogin? = null,
   val firebase: FirebaseLogin? = null,
   val device: Device? = null
 ) : Parcelable
 
 /** @suppress **/
 @Parcelize data class AuthData(
-  val facebook: FacebookLogin? = null,
-  val accountKit: AccountKitLogin? = null,
   val firebase: FirebaseLogin? = null
 ) : Parcelable
 

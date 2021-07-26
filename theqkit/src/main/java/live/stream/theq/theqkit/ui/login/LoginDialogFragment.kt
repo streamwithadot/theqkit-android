@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.submit
 import kotlinx.android.synthetic.main.theqkit_fragment_login_dialog.usernameEditText
 
 import live.stream.theq.theqkit.R
-import live.stream.theq.theqkit.data.sdk.AccountKitLogin
 import live.stream.theq.theqkit.data.sdk.ApiError
 import live.stream.theq.theqkit.data.sdk.FirebaseLogin
 import live.stream.theq.theqkit.data.sdk.LoginAuthData
@@ -145,7 +144,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
     private const val KEY_SUGGESTED_USERNAME = "KEY_SUGGESTED_USERNAME"
     private const val KEY_AUTO_ANDLE_USERNAME_COLLISION = "KEY_AUTO_HANDLE_USERNAME_COLLISION"
 
-    fun newInstance(accountKitLogin: AccountKitLogin? = null,
+    fun newInstance(
       firebaseLogin: FirebaseLogin? = null,
       suggestedUsername: String?,
       listener: LoginResponseListener,
@@ -154,7 +153,6 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
       val loginDialogFragment = LoginDialogFragment().apply {
         arguments = Bundle().apply {
           val loginAuthData = when {
-            accountKitLogin != null -> LoginAuthData(accountKit = accountKitLogin)
             firebaseLogin != null -> LoginAuthData(firebase = firebaseLogin)
             else -> throw IllegalStateException("No login data passed")
           }

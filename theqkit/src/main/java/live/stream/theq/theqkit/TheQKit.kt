@@ -67,47 +67,6 @@ class TheQKit {
   }
 
   /**
-   * Login with AccountKit
-   *
-   * This method handles both new and current users.
-   *
-   * If the AccountKit user already exists on TheQ, we will log the user in.
-   *
-   * If the AccountKit user did not already exist, we will attempt to create one with the
-   * [suggestedUsername] if passed. If no [suggestedUsername] was passed, we will open a dialog
-   * asking the user to select a username.
-   *
-   * @param accountKitId AccountKit id
-   * @param accountKitAccessToken AccountKit access token
-   * @param suggestedUsername Username for the new user. If a user with this username already
-   * exists, we will auto-increment a number at the end of the suggested username until a unique
-   * username is found. Once the user confirms a username, the account will be created and the user
-   * logged in.
-   * @param autoHandleUsernameCollision set to automatically resolve username collisions. Defaults to true
-   * @param listener to handle response
-   */
-  @Keep
-  @JvmOverloads
-  fun loginWithAccountKit(
-    activity: AppCompatActivity,
-    accountKitId: String,
-    accountKitAccessToken: String,
-    suggestedUsername: String? = null,
-    autoHandleUsernameCollision: Boolean = true,
-    listener: LoginResponseListener
-  ) {
-    throwIfNotInitialized()
-    if (isAuthenticated()) {
-      listener.onSuccess()
-      return
-    }
-    val accountKitLogin = AccountKitLogin(accountKitId, accountKitAccessToken)
-    LoginDialogFragment.newInstance(accountKitLogin = accountKitLogin,
-        suggestedUsername = suggestedUsername, listener = listener, autoHandleUsernameCollision = true)
-        .show(activity.supportFragmentManager, LoginDialogFragment::class.java.name)
-  }
-
-  /**
    * Login with Firebase
    *
    * This method handles both new and current users.

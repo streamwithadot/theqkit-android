@@ -20,6 +20,7 @@ import live.stream.theq.theqkit.repository.GameRepository
 import live.stream.theq.theqkit.repository.UserRepository
 import live.stream.theq.theqkit.ui.cashout.CashoutDialogFragment
 import live.stream.theq.theqkit.ui.game.SDKGameActivity
+import live.stream.theq.theqkit.ui.game.WebViewGameActivity
 import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
 import org.koin.standalone.StandAloneContext.loadKoinModules
@@ -158,7 +159,7 @@ class TheQKit {
   }
 
   /**
-   * Launch game screen
+   * Launch Native game screen
    *
    *
    *
@@ -169,6 +170,22 @@ class TheQKit {
   fun launchGameActivity(context: Context, game: GameResponse) {
     throwIfNotInitialized()
     val intent = Intent(context, SDKGameActivity::class.java)
+    intent.putExtra(SDKGameActivity.KEY_GAME, game)
+    context.startActivity(intent)
+  }
+
+  /**
+   * Launch WebView game screen
+   *
+   *
+   *
+   * @param context to launch the game intent (typically activity context here).
+   * @param game to play.
+   */
+  @Keep
+  fun launchWebViewGameActivity(context: Context, game: GameResponse) {
+    throwIfNotInitialized()
+    val intent = Intent(context, WebViewGameActivity::class.java)
     intent.putExtra(SDKGameActivity.KEY_GAME, game)
     context.startActivity(intent)
   }

@@ -2,7 +2,6 @@ package live.stream.theq.theqkit.ui.game
 
 import android.graphics.Bitmap
 import android.os.*
-import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.webkit.WebChromeClient
@@ -16,8 +15,6 @@ import java.net.URLEncoder
 
 @Keep
 open class WebViewGameActivity : AppCompatActivity() {
-
-  lateinit var webView: WebView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -39,8 +36,8 @@ open class WebViewGameActivity : AppCompatActivity() {
     }
 
     val gameUrl = "${basePlayerUrl}partner/${partnerName}?qToken=${URLEncoder.encode(authToken, "utf-8")}"
-    Log.d("GAMEURL", gameUrl)
-    webView = findViewById<WebView>(R.id.theqkit_game_webview).apply {
+
+    findViewById<WebView>(R.id.theqkit_game_webview).apply {
       settings.apply {
         javaScriptEnabled = true
         builtInZoomControls = false
@@ -54,9 +51,6 @@ open class WebViewGameActivity : AppCompatActivity() {
       }
       loadUrl(gameUrl)
     }
-
-
-
   }
 
   companion object {

@@ -6,8 +6,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings.Secure
 import live.stream.theq.theqkit.BuildConfig
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.io.UnsupportedEncodingException
 import java.util.UUID
 

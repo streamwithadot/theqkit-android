@@ -5,8 +5,8 @@ import live.stream.theq.theqkit.repository.LiveGameRepository
 import live.stream.theq.theqkit.ui.game.DefaultProfilePhotoLoader
 import live.stream.theq.theqkit.ui.game.GameViewModel
 import live.stream.theq.theqkit.ui.game.GameWinnerProfilePhotoLoader
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import org.koin.androidx.viewmodel.ext.koin.viewModel
+import org.koin.dsl.module.module
 
 internal val repositoryModule = module {
   single { LiveGameRepository(get(), get()) }

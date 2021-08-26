@@ -22,7 +22,7 @@ import live.stream.theq.theqkit.ui.cashout.CashoutDialogFragment
 import live.stream.theq.theqkit.ui.game.SDKGameActivity
 import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
-import org.koin.core.context.loadKoinModules
+import org.koin.standalone.StandAloneContext.loadKoinModules
 
 /**
  * A top-level object for interacting with TheQKit.
@@ -61,7 +61,8 @@ class TheQKit {
     gameRepository =
       GameRepository(restClient, config, prefsHelper)
     userRepository = UserRepository(restClient, prefsHelper)
-    loadKoinModules(listOf(repositoryModule, theQKitModule, viewModelModule))
+    loadKoinModules(repositoryModule,
+        theQKitModule, viewModelModule)
     initialized = true
   }
 

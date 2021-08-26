@@ -11,21 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
 import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.Player.EventListener
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.source.LoadEventInfo
+import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.source.MediaSource.MediaPeriodId
 import com.google.android.exoplayer2.source.MediaSourceEventListener
-import com.google.android.exoplayer2.source.MediaSourceEventListener.LoadEventInfo
-import com.google.android.exoplayer2.source.MediaSourceEventListener.MediaLoadData
-import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.theqkit_fragment_game_player.loading
@@ -40,7 +36,7 @@ import java.io.IOException
 import java.util.UUID
 
 @Keep
-internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListener {
+internal class PlayerFragment : Fragment(), Player.Listener, MediaSourceEventListener {
 
   private var gameId: UUID? = null
   private var rtmpUri: Uri? = null
@@ -86,18 +82,19 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
 
     Log.d(TAG, "Initializing player")
 
-    player = ExoPlayerFactory.newSimpleInstance(
-        context,
-        DefaultRenderersFactory(context).apply {
-          setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
-        },
-        DefaultTrackSelector(AdaptiveTrackSelection.Factory()),
-        LowLatencyLoadControl()
-    ).apply {
-      addListener(this@PlayerFragment)
-      playerView.player = this
-      playWhenReady = true
-    }
+
+    player = SimpleExoPlayer.Builder(
+      requireContext(),
+      DefaultRenderersFactory(requireContext()).apply {
+        setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+      })
+      .setTrackSelector(DefaultTrackSelector(requireContext(), AdaptiveTrackSelection.Factory()))
+      .setLoadControl(LowLatencyLoadControl())
+      .build().apply {
+        addListener(this@PlayerFragment)
+        playerView.player = this
+        playWhenReady = true
+      }
 
     play()
   }
@@ -118,16 +115,19 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
       playerView.visibility = View.VISIBLE
       player?.repeatMode = Player.REPEAT_MODE_OFF
 
-      val mediaSource = ExtractorMediaSource.Factory(
+      val mediaItem = MediaItem.fromUri(it)
+
+      val mediaSource = DefaultMediaSourceFactory(
           DefaultDataSourceFactory(
-              context,
-              Util.getUserAgent(context, "TheQKit Live Player")
+              requireContext(),
+              Util.getUserAgent(requireContext(), "TheQKit Live Player")
           )
-      ).createMediaSource(rtmpUri)
+      ).createMediaSource(mediaItem)
 
       mediaSource.addEventListener(mainHandler, this)
 
-      player?.prepare(mediaSource)
+      player?.setMediaSource(mediaSource)
+      player?.prepare()
     } ?: run { playerView.visibility = View.GONE }
   }
 
@@ -163,8 +163,7 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
     player = null
   }
 
-
-  override fun onPlayerError(error: ExoPlaybackException?) {
+  override fun onPlayerError(error: PlaybackException) {
     loading.visibility = View.GONE
   }
 
@@ -211,26 +210,15 @@ internal class PlayerFragment : Fragment(), EventListener, MediaSourceEventListe
   override fun onLoadError(
     windowIndex: Int,
     mediaPeriodId: MediaPeriodId?,
-    loadEventInfo: LoadEventInfo?,
-    mediaLoadData: MediaLoadData?,
-    error: IOException?,
+    loadEventInfo: LoadEventInfo,
+    mediaLoadData: MediaLoadData,
+    error: IOException,
     wasCanceled: Boolean
   ) {
     loading.visibility = View.GONE
     videoErrorMessage.visibility = View.VISIBLE
     scheduleRestart(1000L, "LOAD ERROR")
   }
-
-  override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {}
-  override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {}
-  override fun onDownstreamFormatChanged(windowIndex: Int, mediaPeriodId: MediaPeriodId?, mediaLoadData: MediaLoadData?) {}
-  override fun onLoadCanceled(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo?, mediaLoadData: MediaLoadData?) {}
-  override fun onLoadCompleted(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo?, mediaLoadData: MediaLoadData?) {}
-  override fun onLoadStarted(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo?, mediaLoadData: MediaLoadData?) {}
-  override fun onMediaPeriodCreated(windowIndex: Int, mediaPeriodId: MediaPeriodId?) {}
-  override fun onMediaPeriodReleased(windowIndex: Int, mediaPeriodId: MediaPeriodId?) {}
-  override fun onReadingStarted(windowIndex: Int, mediaPeriodId: MediaPeriodId?) {}
-  override fun onUpstreamDiscarded(windowIndex: Int, mediaPeriodId: MediaPeriodId?, mediaLoadData: MediaLoadData?) {}
 
   companion object {
 

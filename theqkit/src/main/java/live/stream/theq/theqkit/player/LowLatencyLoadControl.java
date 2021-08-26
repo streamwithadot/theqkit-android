@@ -19,12 +19,19 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.Renderer;
 import com.google.android.exoplayer2.source.TrackGroupArray;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.trackselection.ExoTrackSelection;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.PriorityTaskManager;
 import com.google.android.exoplayer2.util.Util;
+
+import static com.google.android.exoplayer2.DefaultLoadControl.DEFAULT_AUDIO_BUFFER_SIZE;
+import static com.google.android.exoplayer2.DefaultLoadControl.DEFAULT_CAMERA_MOTION_BUFFER_SIZE;
+import static com.google.android.exoplayer2.DefaultLoadControl.DEFAULT_METADATA_BUFFER_SIZE;
+import static com.google.android.exoplayer2.DefaultLoadControl.DEFAULT_MUXED_BUFFER_SIZE;
+import static com.google.android.exoplayer2.DefaultLoadControl.DEFAULT_TEXT_BUFFER_SIZE;
+import static com.google.android.exoplayer2.DefaultLoadControl.DEFAULT_VIDEO_BUFFER_SIZE;
 
 /**
  * The default {@link LoadControl} implementation.
@@ -341,7 +348,7 @@ public class LowLatencyLoadControl implements LoadControl {
 
   @Override
   public void onTracksSelected(Renderer[] renderers, TrackGroupArray trackGroups,
-      TrackSelectionArray trackSelections) {
+      ExoTrackSelection[] trackSelections) {
     targetBufferSize =
         targetBufferBytesOverwrite == C.LENGTH_UNSET
             ? calculateTargetBufferSize(renderers, trackSelections)
@@ -375,7 +382,7 @@ public class LowLatencyLoadControl implements LoadControl {
   }
 
   @Override
-  public boolean shouldContinueLoading(long bufferedDurationUs, float playbackSpeed) {
+  public boolean shouldContinueLoading(long playbackPositionUs, long bufferedDurationUs, float playbackSpeed) {
     boolean targetBufferSizeReached = allocator.getTotalBytesAllocated() >= targetBufferSize;
     boolean wasBuffering = isBuffering;
     long minBufferUs = this.minBufferUs;
@@ -403,7 +410,7 @@ public class LowLatencyLoadControl implements LoadControl {
 
   @Override
   public boolean shouldStartPlayback(
-      long bufferedDurationUs, float playbackSpeed, boolean rebuffering) {
+      long bufferedDurationUs, float playbackSpeed, boolean rebuffering, long targetLiveOffsetUs) {
     bufferedDurationUs = Util.getPlayoutDurationForMediaDuration(bufferedDurationUs, playbackSpeed);
     long minBufferDurationUs = rebuffering ? bufferForPlaybackAfterRebufferUs : bufferForPlaybackUs;
     return minBufferDurationUs <= 0
@@ -421,11 +428,11 @@ public class LowLatencyLoadControl implements LoadControl {
    * @return The target buffer size in bytes.
    */
   protected int calculateTargetBufferSize(
-      Renderer[] renderers, TrackSelectionArray trackSelectionArray) {
+      Renderer[] renderers, ExoTrackSelection[] trackSelectionArray) {
     int targetBufferSize = 0;
     for (int i = 0; i < renderers.length; i++) {
-      if (trackSelectionArray.get(i) != null) {
-        targetBufferSize += Util.getDefaultBufferSize(renderers[i].getTrackType());
+      if (trackSelectionArray[i] != null) {
+        targetBufferSize += getDefaultBufferSize(renderers[i].getTrackType());
       }
     }
     return targetBufferSize;
@@ -444,5 +451,26 @@ public class LowLatencyLoadControl implements LoadControl {
 
   private static void assertGreaterOrEqual(int value1, int value2, String name1, String name2) {
     Assertions.checkArgument(value1 >= value2, name1 + " cannot be less than " + name2);
+  }
+
+  private static int getDefaultBufferSize(int trackType) {
+    switch (trackType) {
+      case C.TRACK_TYPE_DEFAULT:
+        return DEFAULT_MUXED_BUFFER_SIZE;
+      case C.TRACK_TYPE_AUDIO:
+        return DEFAULT_AUDIO_BUFFER_SIZE;
+      case C.TRACK_TYPE_VIDEO:
+        return DEFAULT_VIDEO_BUFFER_SIZE;
+      case C.TRACK_TYPE_TEXT:
+        return DEFAULT_TEXT_BUFFER_SIZE;
+      case C.TRACK_TYPE_METADATA:
+        return DEFAULT_METADATA_BUFFER_SIZE;
+      case C.TRACK_TYPE_CAMERA_MOTION:
+        return DEFAULT_CAMERA_MOTION_BUFFER_SIZE;
+      case C.TRACK_TYPE_NONE:
+        return 0;
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }

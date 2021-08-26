@@ -13,6 +13,12 @@
         android:theme="@style/TheQKit.VideoTheme"
         android:windowSoftInputMode="adjustResize"/>
 
+    <activity
+        android:name=".ui.game.WebViewGameActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/TheQKit.VideoTheme"
+        android:windowSoftInputMode="adjustResize"/>
+
   </application>
 
 </manifest>

@@ -15,6 +15,8 @@ import live.stream.theq.theqkit.exception.QKitInitializationException
 class TheQConfig private constructor(
   internal val appContext: Context,
   internal val baseUrl: String,
+  internal val webPlayerUrl: String?,
+  internal val partnerName: String?,
   internal val partnerCode: String?,
   internal val sharedPreferences: SharedPreferences? = null,
   internal val debug: Boolean
@@ -27,10 +29,11 @@ class TheQConfig private constructor(
    */
   class Builder @Keep constructor(private val appContext: Application) {
     private var baseUrl: String? = null
+    private var webPlayerUrl: String? = null
+    private var partnerName: String? = null
     private var partnerCode: String? = null
     private var debug: Boolean = false
     private var sharedPreferences: SharedPreferences? = null
-    private var requirePartnerCode: Boolean = true
 
     /**
      * Provide The Q API endpoint for TheQKit
@@ -41,6 +44,28 @@ class TheQConfig private constructor(
     @Keep
     fun baseUrl(baseUrl: String): Builder {
       return apply { this.baseUrl = baseUrl }
+    }
+
+    /**
+     * Provide The Q web player endpoint for TheQKit
+     *
+     * @param webPlayerUrl for game playback
+     * @return instance of [Builder]
+     */
+    @Keep
+    fun webPlayerUrl(webPlayerUrl: String): Builder {
+      return apply { this.webPlayerUrl = webPlayerUrl }
+    }
+
+    /**
+     * Provide partner name to TheQKit
+     *
+     * @param partnerName for application
+     * @return instance of [Builder]
+     */
+    @Keep
+    fun partnerName(partnerName: String): Builder {
+      return apply { this.partnerName = partnerName }
     }
 
     /**
@@ -80,17 +105,6 @@ class TheQConfig private constructor(
     }
 
     /**
-     * Internal only
-     *
-     * Do not keep. stripped out by r8
-     *
-     * @suppress
-     */
-    fun requirePartnerCode(require: Boolean): Builder {
-      return apply { this.requirePartnerCode = require }
-    }
-
-    /**
      * Build TheQConfig
      *
      * Call this method after providing all required values to [TheQConfig.Builder],
@@ -107,13 +121,15 @@ class TheQConfig private constructor(
         throw QKitInitializationException("API base url must be set before building TheQConfig.")
       }
 
-      if (requirePartnerCode && partnerCode.isNullOrBlank()) {
+      if (partnerCode.isNullOrBlank()) {
         throw QKitInitializationException("Partner Code must be set before building TheQConfig.")
       }
 
       return TheQConfig(
           appContext = appContext,
           baseUrl = baseUrl,
+          webPlayerUrl = webPlayerUrl,
+          partnerName = partnerName,
           partnerCode = partnerCode,
           sharedPreferences = sharedPreferences,
           debug = debug)

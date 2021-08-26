@@ -20,6 +20,7 @@ import live.stream.theq.theqkit.repository.GameRepository
 import live.stream.theq.theqkit.repository.UserRepository
 import live.stream.theq.theqkit.ui.cashout.CashoutDialogFragment
 import live.stream.theq.theqkit.ui.game.SDKGameActivity
+import live.stream.theq.theqkit.ui.game.WebViewGameActivity
 import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
 import org.koin.standalone.StandAloneContext.loadKoinModules
@@ -64,47 +65,6 @@ class TheQKit {
     loadKoinModules(repositoryModule,
         theQKitModule, viewModelModule)
     initialized = true
-  }
-
-  /**
-   * Login with AccountKit
-   *
-   * This method handles both new and current users.
-   *
-   * If the AccountKit user already exists on TheQ, we will log the user in.
-   *
-   * If the AccountKit user did not already exist, we will attempt to create one with the
-   * [suggestedUsername] if passed. If no [suggestedUsername] was passed, we will open a dialog
-   * asking the user to select a username.
-   *
-   * @param accountKitId AccountKit id
-   * @param accountKitAccessToken AccountKit access token
-   * @param suggestedUsername Username for the new user. If a user with this username already
-   * exists, we will auto-increment a number at the end of the suggested username until a unique
-   * username is found. Once the user confirms a username, the account will be created and the user
-   * logged in.
-   * @param autoHandleUsernameCollision set to automatically resolve username collisions. Defaults to true
-   * @param listener to handle response
-   */
-  @Keep
-  @JvmOverloads
-  fun loginWithAccountKit(
-    activity: AppCompatActivity,
-    accountKitId: String,
-    accountKitAccessToken: String,
-    suggestedUsername: String? = null,
-    autoHandleUsernameCollision: Boolean = true,
-    listener: LoginResponseListener
-  ) {
-    throwIfNotInitialized()
-    if (isAuthenticated()) {
-      listener.onSuccess()
-      return
-    }
-    val accountKitLogin = AccountKitLogin(accountKitId, accountKitAccessToken)
-    LoginDialogFragment.newInstance(accountKitLogin = accountKitLogin,
-        suggestedUsername = suggestedUsername, listener = listener, autoHandleUsernameCollision = true)
-        .show(activity.supportFragmentManager, LoginDialogFragment::class.java.name)
   }
 
   /**
@@ -199,7 +159,7 @@ class TheQKit {
   }
 
   /**
-   * Launch game screen
+   * Launch Native game screen
    *
    *
    *
@@ -210,6 +170,22 @@ class TheQKit {
   fun launchGameActivity(context: Context, game: GameResponse) {
     throwIfNotInitialized()
     val intent = Intent(context, SDKGameActivity::class.java)
+    intent.putExtra(SDKGameActivity.KEY_GAME, game)
+    context.startActivity(intent)
+  }
+
+  /**
+   * Launch WebView game screen
+   *
+   *
+   *
+   * @param context to launch the game intent (typically activity context here).
+   * @param game to play.
+   */
+  @Keep
+  fun launchWebViewGameActivity(context: Context, game: GameResponse) {
+    throwIfNotInitialized()
+    val intent = Intent(context, WebViewGameActivity::class.java)
     intent.putExtra(SDKGameActivity.KEY_GAME, game)
     context.startActivity(intent)
   }

@@ -40,7 +40,8 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
     }
 
     this.game = game
-    val gameUrl = "${basePlayerUrl}partner/${partnerName}?qToken=${URLEncoder.encode(authToken, "utf-8")}"
+    val gameUrl = "${basePlayerUrl}partner/${partnerName}?game=${game.id
+    }&qToken=${URLEncoder.encode(authToken, "utf-8")}&useMobile=1"
 
     findViewById<WebView>(R.id.theqkit_game_webview).apply {
       settings.apply {
@@ -66,6 +67,7 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
 
   override fun onGameEnded(winner: Boolean) {
     setResult(RESULT_CODE, getResultIntent(game, winner = winner, gameEnded = true))
+    finish()
   }
 
   private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean): Intent {

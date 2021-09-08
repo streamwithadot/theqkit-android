@@ -91,7 +91,8 @@ interface ApiService {
   @GET("season")
   fun seasons(
     @Query("includeCategories") includeCategories: String,
-    @Query("includeLeaderboards") includeLeaderboards: String
+    @Query("includeLeaderboards") includeLeaderboards: String,
+    @Query("partnerCode") partnerCode: String? = null
   ): Observable<Result<SeasonResponse>>
 
   @GET("season")

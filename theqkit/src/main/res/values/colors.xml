@@ -32,4 +32,6 @@
   <color name="theqkit_game_overlay_correct">#E632C274</color>
   <color name="theqkit_game_overlay_incorrect">#E6E63462</color>
 
+  <color name="theqkit_web_game_loading_background">#FFFFFF</color>
+
 </resources>

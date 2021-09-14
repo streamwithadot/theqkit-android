@@ -9,6 +9,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.TheQKit
 import live.stream.theq.theqkit.data.sdk.GameResponse
@@ -54,6 +55,7 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
             return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
           }
         }
+        setBackgroundColor(ContextCompat.getColor(this@WebViewGameActivity, R.color.theqkit_web_game_loading_background))
         addJavascriptInterface(GameWebAppInterface(gson, this@WebViewGameActivity), GameWebAppInterface.NAME)
       }
       loadUrl(gameUrl)

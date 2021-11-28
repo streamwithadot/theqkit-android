@@ -15,6 +15,8 @@ data class GameListResponse(val games: List<GameResponse>)
     val streamUrl: String,
     val host: String?,
     val sseHost: String?,
+    val label: String?,
+    val description: String?,
     val reward: Double,
     val locked: Boolean,
     val active: Boolean,
@@ -26,6 +28,7 @@ data class GameListResponse(val games: List<GameResponse>)
     val eligible: Boolean?,
     val notEligibleMessage: String?,
     val subscriberOnly: Boolean?,
+    val previewImageUrl: String?,
     val adCode: String?,
     val gameType: String,
     val winCondition: String) : Parcelable {

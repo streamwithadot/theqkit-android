@@ -24,6 +24,7 @@ import live.stream.theq.theqkit.ui.game.WebViewGameActivity
 import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
 import org.koin.standalone.StandAloneContext.loadKoinModules
+import java.util.*
 
 /**
  * A top-level object for interacting with TheQKit.
@@ -110,6 +111,46 @@ class TheQKit {
   }
 
   /**
+   * Login with Mimir
+   *
+   * This method handles both new and current users.
+   *
+   * If the Mimir user already exists on TheQ, we will log the user in.
+   *
+   * If the mimir user did not already exist, we will attempt to create one with the
+   * [suggestedUsername] if passed. If no [suggestedUsername] was passed, we will open a dialog
+   * asking the user to select a username.
+   *
+   * @param mimirAccessToken Mimir access token
+   * @param suggestedUsername Username for the new user. If a user with this username already
+   * exists, we will auto-increment a number at the end of the suggested username until a unique
+   * username is found. Once the user confirms a username, the account will be created and the user
+   * logged in.
+   * @param autoHandleUsernameCollision set to automatically resolve username collisions. Defaults to true
+   * @param listener to handle response
+
+   */
+  @Keep
+  @JvmOverloads
+  fun loginWithMimir(
+    activity: AppCompatActivity,
+    mimirAccessToken: String,
+    suggestedUsername: String? = null,
+    autoHandleUsernameCollision: Boolean = true,
+    listener: LoginResponseListener
+  ) {
+    throwIfNotInitialized()
+    if (isAuthenticated()) {
+      listener.onSuccess()
+      return
+    }
+    val mimirLogin = MimirLogin(mimirAccessToken)
+    LoginDialogFragment.newInstance(mimirLogin = mimirLogin,
+        suggestedUsername = suggestedUsername, listener = listener, autoHandleUsernameCollision = autoHandleUsernameCollision)
+        .show(activity.supportFragmentManager, LoginDialogFragment::class.java.name)
+  }
+
+  /**
    * Logout of TheQ
    *
    * This attempts to delete user token from TheQ servers and clears TheQ shared preferences stored on device.
@@ -138,9 +179,9 @@ class TheQKit {
    *  @param listener to handle response.
    */
   @Keep
-  fun fetchGames(listener: GameResponseListener) {
+  fun fetchGames(anonymous: Boolean, listener: GameResponseListener) {
     throwIfNotInitialized()
-    gameRepository.fetchGames(listener)
+    gameRepository.fetchGames(anonymous, listener)
   }
 
   /**
@@ -183,10 +224,31 @@ class TheQKit {
    * @param game to play.
    */
   @Keep
-  fun launchWebViewGameActivity(context: Context, game: GameResponse) {
+  fun launchWebViewGameActivity(context: Context, gameId: UUID) {
     throwIfNotInitialized()
+    val dummyGame = GameResponse(id = gameId,
+                                 streamUrl = "",
+                                 host = null,
+                                 sseHost = null,
+                                 label = null,
+                                 description = null,
+                                 reward = 0.0,
+                                 customRewardText = null,
+                                 locked = false,
+                                 active = true,
+                                 scheduled = 0,
+                                 heartsEnabled = false,
+                                 lastQuestionHeartEligible = null,
+                                 theme = null,
+                                 eligible = null,
+                                 notEligibleMessage = null,
+                                 subscriberOnly = null,
+                                 previewImageUrl = null,
+                                 adCode = null,
+                                 gameType = "",
+                                 winCondition = "")
     val intent = Intent(context, WebViewGameActivity::class.java)
-    intent.putExtra(SDKGameActivity.KEY_GAME, game)
+    intent.putExtra(SDKGameActivity.KEY_GAME, dummyGame)
     context.startActivity(intent)
   }
 

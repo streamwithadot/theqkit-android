@@ -34,7 +34,7 @@ internal class GameRepository(
   private val seasonRequestInProgress = AtomicBoolean()
   private var lastSuccessfulSeasonResponse: LastSuccessfulSeasonResponse? = null
 
-  internal fun fetchGames(listener: GameResponseListener) {
+  internal fun fetchGames(anonymous: Boolean, listener: GameResponseListener) {
     if (requestInProgress.get()) {
       launch {
         listener.onFailure(
@@ -59,7 +59,7 @@ internal class GameRepository(
       try {
         val gameListResponse =
           apiService.scheduledGamesAsync(
-              partnerCode = config.partnerCode, userId = prefsHelper.userId
+              partnerCode = config.partnerCode, userId = if (anonymous) null else prefsHelper.userId
           ).await()
         if (gameListResponse.isSuccessful) {
           val games = gameListResponse.body()?.games ?: emptyList()

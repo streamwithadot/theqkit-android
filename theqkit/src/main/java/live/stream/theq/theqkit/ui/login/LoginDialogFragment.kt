@@ -27,6 +27,7 @@ import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.data.sdk.ApiError
 import live.stream.theq.theqkit.data.sdk.FirebaseLogin
 import live.stream.theq.theqkit.data.sdk.LoginAuthData
+import live.stream.theq.theqkit.data.sdk.MimirLogin
 import live.stream.theq.theqkit.listener.LoginResponseListener
 import java.lang.IllegalStateException
 
@@ -64,7 +65,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    viewModel.loginStateLiveData.observe(this, Observer { state ->
+    viewModel.loginStateLiveData.observe(viewLifecycleOwner, Observer { state ->
       context?.let {
         if (state.isCompleted) {
           // not a fan of allowing state loss.
@@ -146,6 +147,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
 
     fun newInstance(
       firebaseLogin: FirebaseLogin? = null,
+      mimirLogin: MimirLogin? = null,
       suggestedUsername: String?,
       listener: LoginResponseListener,
       autoHandleUsernameCollision: Boolean
@@ -154,6 +156,7 @@ internal class LoginDialogFragment : AppCompatDialogFragment() {
         arguments = Bundle().apply {
           val loginAuthData = when {
             firebaseLogin != null -> LoginAuthData(firebase = firebaseLogin)
+            mimirLogin != null -> LoginAuthData(mimir = mimirLogin)
             else -> throw IllegalStateException("No login data passed")
           }
           putParcelable(KEY_LOGIN_AUTH_DATA, loginAuthData)

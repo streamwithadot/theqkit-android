@@ -8,14 +8,19 @@ import live.stream.theq.theqkit.data.app.Device
 @Parcelize data class FirebaseLogin(val id: String, val accessToken: String, val email: String? = null): Parcelable
 
 /** @suppress **/
+@Parcelize data class MimirLogin(val accessToken: String): Parcelable
+
+/** @suppress **/
 @Parcelize data class LoginAuthData(
   val firebase: FirebaseLogin? = null,
+  val mimir: MimirLogin? = null,
   val device: Device? = null
 ) : Parcelable
 
 /** @suppress **/
 @Parcelize data class AuthData(
-  val firebase: FirebaseLogin? = null
+  val firebase: FirebaseLogin? = null,
+  val mimir: MimirLogin? = null
 ) : Parcelable
 
 /** @suppress **/

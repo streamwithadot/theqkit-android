@@ -1,7 +1,9 @@
 package live.stream.theq.theqkit
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
@@ -13,6 +15,7 @@ import live.stream.theq.theqkit.events.Event
 import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.exception.QKitInitializationException
 import live.stream.theq.theqkit.http.RestClient
+import live.stream.theq.theqkit.listener.GameResultListener
 import live.stream.theq.theqkit.listener.GameResponseListener
 import live.stream.theq.theqkit.listener.LoginResponseListener
 import live.stream.theq.theqkit.listener.SeasonResponseListener
@@ -21,6 +24,7 @@ import live.stream.theq.theqkit.repository.UserRepository
 import live.stream.theq.theqkit.ui.cashout.CashoutDialogFragment
 import live.stream.theq.theqkit.ui.game.SDKGameActivity
 import live.stream.theq.theqkit.ui.game.WebViewGameActivity
+import live.stream.theq.theqkit.ui.game.WebViewGameActivityContract
 import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
 import org.koin.standalone.StandAloneContext.loadKoinModules
@@ -224,7 +228,7 @@ class TheQKit {
    * @param game to play.
    */
   @Keep
-  fun launchWebViewGameActivity(context: Context, gameId: UUID) {
+  fun launchWebViewGameActivity(context: Context, gameId: UUID, listener: GameResultListener) {
     throwIfNotInitialized()
     val dummyGame = GameResponse(id = gameId,
                                  streamUrl = "",
@@ -247,9 +251,14 @@ class TheQKit {
                                  adCode = null,
                                  gameType = "",
                                  winCondition = "")
-    val intent = Intent(context, WebViewGameActivity::class.java)
-    intent.putExtra(SDKGameActivity.KEY_GAME, dummyGame)
-    context.startActivity(intent)
+
+
+    val activity = context as AppCompatActivity
+    val activityLauncher = activity.registerForActivityResult(WebViewGameActivityContract()) { result ->
+      listener.onSuccess(result)
+    }
+
+    activityLauncher.launch(dummyGame)
   }
 
   /**

@@ -301,3 +301,11 @@ data class GameWinnersState(val count: Int, val profiles: List<GameWinnerState>)
 data class GameWinnerState(val username: String, val pic: String?) {
   internal constructor(gameWinner: GameWinner) : this(gameWinner.user, gameWinner.pic)
 }
+
+
+/** @suppress **/
+data class GameResult(
+    val ended: Boolean,
+    val won: Boolean,
+    val winnerCount: Int,
+    val reward: Double)

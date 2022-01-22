@@ -13,11 +13,11 @@ group = POM_GROUP_ID
 version = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
 
 android {
-  compileSdkVersion 28
+  compileSdkVersion 29
 
   defaultConfig {
     minSdkVersion 21
-    targetSdkVersion 28
+    targetSdkVersion 29
     versionCode 1
     versionName version
   }
@@ -45,7 +45,7 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+  implementation 'androidx.appcompat:appcompat:1.4.1'
   implementation 'androidx.recyclerview:recyclerview:1.0.0'
   implementation 'androidx.annotation:annotation:1.1.0'
   implementation 'androidx.legacy:legacy-support-v4:1.0.0'

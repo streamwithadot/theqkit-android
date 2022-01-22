@@ -64,19 +64,20 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
 
   override fun onBackPressed() {
     super.onBackPressed()
-    setResult(RESULT_CODE, getResultIntent(game, winner = false, gameEnded = false))
+    setResult(RESULT_CODE, getResultIntent(game, winner = false, gameEnded = false, winnerCount = 0, reward = 0))
   }
 
-  override fun onGameEnded(winner: Boolean) {
-    setResult(RESULT_CODE, getResultIntent(game, winner = winner, gameEnded = true))
+  override fun onGameEnded(winner: Boolean, winnerCount: Int, reward: Int) {
+    setResult(RESULT_CODE, getResultIntent(game, winner = winner, gameEnded = true, winnerCount = winnerCount, reward = reward))
     finish()
   }
 
-  private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean): Intent {
+  private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean, winnerCount: Int, reward: Int): Intent {
     return Intent().apply {
-      putExtra(KEY_WINNER, winner)
+      putExtra(KEY_GAME_WINNER, winner)
       putExtra(KEY_GAME_ENDED, gameEnded)
-      putExtra(KEY_GAME, game)
+      putExtra(KEY_GAME_WINNER_COUNT, winnerCount)
+      putExtra(KEY_GAME_REWARD, reward)
     }
   }
 
@@ -86,9 +87,12 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
     const val RESULT_CODE = 72
     const val KEY_WINNER = "WINNER"
     const val KEY_GAME_ENDED = "GAME_ENDED"
+    const val KEY_GAME_WINNER = "GAME_WINNER"
+    const val KEY_GAME_WINNER_COUNT = "GAME_WINNER_COUNT"
+    const val KEY_GAME_REWARD = "GAME_REWARD"
   }
 }
 
 interface WebGameListener {
-  fun onGameEnded(winner: Boolean)
+  fun onGameEnded(winner: Boolean, winnerCount: Int, reward: Int)
 }

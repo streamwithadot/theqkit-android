@@ -10,9 +10,11 @@ import android.webkit.WebView
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import live.stream.theq.theqkit.GlobalGameResultHandler
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.TheQKit
 import live.stream.theq.theqkit.data.sdk.GameResponse
+import live.stream.theq.theqkit.data.sdk.GameResult
 import java.net.URLEncoder
 
 @Keep
@@ -64,15 +66,17 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
 
   override fun onBackPressed() {
     super.onBackPressed()
-    setResult(RESULT_CODE, getResultIntent(game, winner = false, gameEnded = false, winnerCount = 0, reward = 0))
+    setResult(RESULT_CODE, getResultIntent(game, winner = false, gameEnded = false, winnerCount = 0, reward = 0.0))
+    GlobalGameResultHandler.handleResult(GameResult(false, false, 0, 0.0))
   }
 
-  override fun onGameEnded(winner: Boolean, winnerCount: Int, reward: Int) {
+  override fun onGameEnded(winner: Boolean, winnerCount: Int, reward: Double) {
     setResult(RESULT_CODE, getResultIntent(game, winner = winner, gameEnded = true, winnerCount = winnerCount, reward = reward))
+    GlobalGameResultHandler.handleResult(GameResult(true, winner, winnerCount, reward))
     finish()
   }
 
-  private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean, winnerCount: Int, reward: Int): Intent {
+  private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean, winnerCount: Int, reward: Double): Intent {
     return Intent().apply {
       putExtra(KEY_GAME_WINNER, winner)
       putExtra(KEY_GAME_ENDED, gameEnded)
@@ -94,5 +98,5 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
 }
 
 interface WebGameListener {
-  fun onGameEnded(winner: Boolean, winnerCount: Int, reward: Int)
+  fun onGameEnded(winner: Boolean, winnerCount: Int, reward: Double)
 }

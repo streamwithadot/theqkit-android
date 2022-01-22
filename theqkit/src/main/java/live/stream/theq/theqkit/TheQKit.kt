@@ -24,7 +24,6 @@ import live.stream.theq.theqkit.repository.UserRepository
 import live.stream.theq.theqkit.ui.cashout.CashoutDialogFragment
 import live.stream.theq.theqkit.ui.game.SDKGameActivity
 import live.stream.theq.theqkit.ui.game.WebViewGameActivity
-import live.stream.theq.theqkit.ui.game.WebViewGameActivityContract
 import live.stream.theq.theqkit.ui.login.LoginDialogFragment
 import live.stream.theq.theqkit.util.PrefsHelper
 import org.koin.standalone.StandAloneContext.loadKoinModules
@@ -252,13 +251,11 @@ class TheQKit {
                                  gameType = "",
                                  winCondition = "")
 
+    GlobalGameResultHandler.addListener(listener)
 
-    val activity = context as AppCompatActivity
-    val activityLauncher = activity.registerForActivityResult(WebViewGameActivityContract()) { result ->
-      listener.onSuccess(result)
-    }
-
-    activityLauncher.launch(dummyGame)
+    val intent = Intent(context, WebViewGameActivity::class.java)
+    intent.putExtra(SDKGameActivity.KEY_GAME, dummyGame)
+    context.startActivity(intent)
   }
 
   /**

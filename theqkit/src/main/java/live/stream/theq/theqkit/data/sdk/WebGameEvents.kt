@@ -11,5 +11,5 @@ data class WebGameEndedEvent(val success: Boolean, val type: String, val data: W
 data class WebGameEndedData(
     val won: Boolean,
     val winnerCount: Int,
-    val reward: Int
+    val reward: Double
 )

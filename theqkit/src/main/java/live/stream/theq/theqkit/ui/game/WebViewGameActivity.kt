@@ -10,9 +10,11 @@ import android.webkit.WebView
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import live.stream.theq.theqkit.GlobalGameResultHandler
 import live.stream.theq.theqkit.R
 import live.stream.theq.theqkit.TheQKit
 import live.stream.theq.theqkit.data.sdk.GameResponse
+import live.stream.theq.theqkit.data.sdk.GameResult
 import java.net.URLEncoder
 
 @Keep
@@ -64,19 +66,22 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
 
   override fun onBackPressed() {
     super.onBackPressed()
-    setResult(RESULT_CODE, getResultIntent(game, winner = false, gameEnded = false))
+    setResult(RESULT_CODE, getResultIntent(game, winner = false, gameEnded = false, winnersCount = 0, reward = 0.0))
+    GlobalGameResultHandler.handleResult(GameResult(false, false, 0, 0.0))
   }
 
-  override fun onGameEnded(winner: Boolean) {
-    setResult(RESULT_CODE, getResultIntent(game, winner = winner, gameEnded = true))
+  override fun onGameEnded(winner: Boolean, winnersCount: Int, reward: Double) {
+    setResult(RESULT_CODE, getResultIntent(game, winner = winner, gameEnded = true, winnersCount = winnersCount, reward = reward))
+    GlobalGameResultHandler.handleResult(GameResult(true, winner, winnersCount, reward))
     finish()
   }
 
-  private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean): Intent {
+  private fun getResultIntent(game: GameResponse, winner: Boolean, gameEnded: Boolean, winnersCount: Int, reward: Double): Intent {
     return Intent().apply {
-      putExtra(KEY_WINNER, winner)
+      putExtra(KEY_GAME_WINNER, winner)
       putExtra(KEY_GAME_ENDED, gameEnded)
-      putExtra(KEY_GAME, game)
+      putExtra(KEY_GAME_WINNERS_COUNT, winnersCount)
+      putExtra(KEY_GAME_REWARD, reward)
     }
   }
 
@@ -84,11 +89,13 @@ open class WebViewGameActivity : AppCompatActivity(), WebGameListener {
     const val KEY_GAME = "KEY_GAME"
     const val REQUEST_CODE = 58
     const val RESULT_CODE = 72
-    const val KEY_WINNER = "WINNER"
     const val KEY_GAME_ENDED = "GAME_ENDED"
+    const val KEY_GAME_WINNER = "GAME_WINNER"
+    const val KEY_GAME_WINNERS_COUNT = "GAME_WINNERS_COUNT"
+    const val KEY_GAME_REWARD = "GAME_REWARD"
   }
 }
 
 interface WebGameListener {
-  fun onGameEnded(winner: Boolean)
+  fun onGameEnded(winner: Boolean, winnersCount: Int, reward: Double)
 }

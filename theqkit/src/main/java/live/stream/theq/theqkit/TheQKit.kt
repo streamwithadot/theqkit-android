@@ -13,6 +13,7 @@ import live.stream.theq.theqkit.events.Event
 import live.stream.theq.theqkit.events.Events
 import live.stream.theq.theqkit.exception.QKitInitializationException
 import live.stream.theq.theqkit.http.RestClient
+import live.stream.theq.theqkit.listener.GameResultListener
 import live.stream.theq.theqkit.listener.GameResponseListener
 import live.stream.theq.theqkit.listener.LoginResponseListener
 import live.stream.theq.theqkit.listener.SeasonResponseListener
@@ -224,7 +225,7 @@ class TheQKit {
    * @param game to play.
    */
   @Keep
-  fun launchWebViewGameActivity(context: Context, gameId: UUID) {
+  fun launchWebViewGameActivity(context: Context, gameId: UUID, listener: GameResultListener) {
     throwIfNotInitialized()
     val dummyGame = GameResponse(id = gameId,
                                  streamUrl = "",
@@ -247,6 +248,9 @@ class TheQKit {
                                  adCode = null,
                                  gameType = "",
                                  winCondition = "")
+
+    GlobalGameResultHandler.addListener(listener)
+
     val intent = Intent(context, WebViewGameActivity::class.java)
     intent.putExtra(SDKGameActivity.KEY_GAME, dummyGame)
     context.startActivity(intent)

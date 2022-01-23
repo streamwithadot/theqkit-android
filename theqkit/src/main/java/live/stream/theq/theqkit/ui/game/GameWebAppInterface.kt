@@ -17,7 +17,10 @@ class GameWebAppInterface(private val gson: Gson, private val listener: WebGameL
     }
 
     if (gameEndedEvent != null) {
-      listener.onGameEnded(gameEndedEvent.isGameEndedEvent() && gameEndedEvent.isWinner())
+      listener.onGameEnded(
+        gameEndedEvent.isGameEndedEvent() && gameEndedEvent.isWinner(),
+        gameEndedEvent.winnersCount(),
+        gameEndedEvent.reward())
     }
   }
 
